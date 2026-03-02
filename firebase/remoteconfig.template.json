@@ -1,0 +1,10 @@
+{
+  "parameters": {
+    "pass_fail_enabled": {
+      "defaultValue": {
+        "value": "false"
+      },
+      "description": "Controls pass/fail UI visibility for experiments"
+    }
+  }
+}

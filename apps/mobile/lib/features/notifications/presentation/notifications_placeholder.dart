@@ -1,0 +1,3 @@
+class NotificationsFeaturePlaceholder {
+  const NotificationsFeaturePlaceholder();
+}
