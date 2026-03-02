@@ -4,7 +4,8 @@
       "defaultValue": {
         "value": "false"
       },
-      "description": "Controls pass/fail UI visibility for experiments"
+      "description": "Controls pass/fail UI visibility for experiments",
+      "valueType": "BOOLEAN"
     }
   }
 }

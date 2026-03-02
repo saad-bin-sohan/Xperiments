@@ -1,22 +1,57 @@
 # Xperiments Cloud Functions
 
-Phase 4 functions included:
+## Runtime
 
-- `onCheckinCreate`: friend accountability notifications
-- `dailyNudgeCheck`: scheduled nudge notifications
-- `onUserDisabled`: disable Firebase Auth account when Firestore user is disabled
+- Node 20
+- TypeScript
 
-## Local
+## Exported functions
+
+### Notifications
+- `onCheckinCreate`
+- `dailyNudgeCheck`
+
+### User lifecycle
+- `onUserDisabled`
+
+### Stats triggers
+- `onUserDocumentCreate`
+- `onExperimentCreate`
+- `onExperimentDelete`
+
+### Admin callables (admin-only)
+- `adminGetFeatureFlags`
+- `adminSetPassFailFlag`
+- `adminGetBasicStats`
+- `adminBackfillStats`
+
+## Local development
 
 ```bash
 cd functions
 npm install
 npm run build
+npm run lint
+```
+
+## Emulator
+
+```bash
+cd functions
+npm run serve
 ```
 
 ## Deploy
 
+From repo root (preferred):
+
 ```bash
-cd functions
+firebase deploy --project dev --only functions
+firebase deploy --project prod --only functions
+```
+
+Or from `functions/`:
+
+```bash
 npm run deploy
 ```

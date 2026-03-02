@@ -1,0 +1,22 @@
+{
+  "projects": {
+    "dev": "xperiments-dev",
+    "prod": "xperiments-prod"
+  },
+  "targets": {
+    "xperiments-dev": {
+      "hosting": {
+        "admin": [
+          "xperiments-admin-dev"
+        ]
+      }
+    },
+    "xperiments-prod": {
+      "hosting": {
+        "admin": [
+          "xperiments-admin-prod"
+        ]
+      }
+    }
+  }
+}

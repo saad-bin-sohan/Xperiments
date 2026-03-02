@@ -4,6 +4,8 @@
 **/.flutter-plugins-dependencies
 **/.packages
 **/build/
+**/dist/
+**/*.tsbuildinfo
 **/.pub-cache/
 **/.pub/
 **/node_modules/

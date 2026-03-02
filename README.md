@@ -1,44 +1,213 @@
 # Xperiments
 
-Xperiments is a private, minimal self-improvement experiment tracker built with Flutter and Firebase.
+Xperiments is a private, minimal self-improvement experiment tracker built with Flutter + Firebase.
 
-## Monorepo Layout
+## Monorepo layout
 
-- `apps/mobile`: Flutter mobile app (Android active, iOS onboarding-ready)
-- `apps/admin`: Admin panel placeholder (Phase 5)
-- `functions`: Firebase Functions placeholder (later phases)
-- `firebase`: Shared Firebase config/rules templates
+- `apps/mobile` Flutter mobile app (Android active, iOS-ready architecture)
+- `apps/admin` Admin panel (React + Vite + TypeScript)
+- `functions` Firebase Cloud Functions (TypeScript)
+- `firebase` Canonical Firebase rules/indexes/templates
 
-## Phase 1 Setup
+## Prerequisites
 
-1. Install dependencies:
-   - `cd apps/mobile`
-   - `flutter pub get`
-2. Install FlutterFire CLI:
-   - `dart pub global activate flutterfire_cli`
-3. Add Firebase Android apps for both projects (`xperiments-dev`, `xperiments-prod`) with package: `com.xperiments.app`.
-4. Configure FlutterFire for dev:
-   - `flutterfire configure --project=xperiments-dev --platforms=android`
-   - Copy generated options into `lib/core/firebase/firebase_options_dev.dart`.
-5. Configure FlutterFire for prod:
-   - `flutterfire configure --project=xperiments-prod --platforms=android`
-   - Copy generated options into `lib/core/firebase/firebase_options_prod.dart`.
-6. Enable Firebase Auth providers:
+- Flutter `3.41.2+`
+- Dart `3.11+`
+- Node.js `20.x` (for functions runtime parity)
+- npm `10+`
+- Firebase CLI (`firebase-tools`)
+- FlutterFire CLI (`dart pub global activate flutterfire_cli`)
+
+## Firebase projects and aliases
+
+This repo expects two Firebase projects:
+
+- `xperiments-dev`
+- `xperiments-prod`
+
+Root `.firebaserc` maps aliases:
+
+- `dev -> xperiments-dev`
+- `prod -> xperiments-prod`
+
+## One-time Firebase setup
+
+1. Enable Authentication providers:
    - Email/Password
    - Google
-7. Create Firestore database and Remote Config parameter:
+2. Create Firestore database (production mode).
+3. Create Firebase Storage bucket.
+4. Create Remote Config parameter:
    - `pass_fail_enabled` default `false`
+5. Register Android app with package `com.xperiments.app` in both projects.
+6. Register a Firebase Web app in both projects for `apps/admin` and store config values.
 
-```dart
-// TODO: iOS Firebase Config — when iOS build begins (~1 week):
-// 1. Go to Firebase Console → Project Settings → Add App → iOS
-// 2. Download GoogleService-Info.plist and add it to ios/Runner/ via Xcode
-// 3. Run: flutterfire configure --platforms=android,ios
+## Mobile app setup (`apps/mobile`)
+
+1. Install dependencies:
+
+```bash
+cd apps/mobile
+flutter pub get
 ```
 
-## Run App
+2. Generate FlutterFire options per project and update:
+
+- `lib/core/firebase/firebase_options_dev.dart`
+- `lib/core/firebase/firebase_options_prod.dart`
+
+```bash
+flutterfire configure --project=xperiments-dev --platforms=android
+flutterfire configure --project=xperiments-prod --platforms=android
+```
+
+3. Generate Riverpod/Freezed files:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+4. Run:
+
+```bash
+flutter run --dart-define=FLAVOR=dev
+# or
+flutter run --dart-define=FLAVOR=prod
+```
+
+## Build Android release APK
 
 From `apps/mobile`:
 
-- Dev: `flutter run --dart-define=FLAVOR=dev`
-- Prod: `flutter run --dart-define=FLAVOR=prod`
+```bash
+flutter build apk --release --dart-define=FLAVOR=prod
+```
+
+APK output:
+
+- `apps/mobile/build/app/outputs/flutter-apk/app-release.apk`
+
+## Admin panel setup (`apps/admin`)
+
+1. Create env file:
+
+```bash
+cd apps/admin
+cp .env.example .env.local
+```
+
+2. Set values in `.env.local`:
+
+- `VITE_FIREBASE_API_KEY`
+- `VITE_FIREBASE_AUTH_DOMAIN`
+- `VITE_FIREBASE_PROJECT_ID`
+- `VITE_FIREBASE_STORAGE_BUCKET`
+- `VITE_FIREBASE_MESSAGING_SENDER_ID`
+- `VITE_FIREBASE_APP_ID`
+- `VITE_FIREBASE_FUNCTIONS_REGION` (default `us-central1`)
+
+3. Install and run:
+
+```bash
+npm install
+npm run dev
+```
+
+4. Build:
+
+```bash
+npm run build
+```
+
+## Functions setup (`functions`)
+
+```bash
+cd functions
+npm install
+npm run build
+npm run lint
+```
+
+## Deploying backend + hosting
+
+From repo root:
+
+```bash
+firebase deploy --project dev --only hosting,functions,firestore,storage
+firebase deploy --project prod --only hosting,functions,firestore,storage
+```
+
+Deploy specific targets:
+
+```bash
+firebase deploy --project dev --only hosting:admin
+firebase deploy --project dev --only functions
+firebase deploy --project dev --only firestore,storage
+```
+
+## Rules and indexes
+
+Canonical Firebase config lives in:
+
+- `firebase/firestore.rules`
+- `firebase/firestore.indexes.json`
+- `firebase/storage.rules`
+
+`apps/mobile` contains mirrored copies used by local mobile tooling.
+
+## Admin operations
+
+### Create first admin account
+
+1. Sign in once through admin login (or mobile auth flow) so user doc exists.
+2. In Firestore set:
+
+- `users/{uid}.isAdmin = true`
+
+### Deactivate a user
+
+Use Admin -> User Manager -> `Deactivate`. This sets `users/{uid}.disabled = true`.
+`onUserDisabled` then disables the Firebase Auth account.
+
+### Manage gallery templates
+
+Use Admin -> Gallery Manager for create/edit/delete/feature/order operations.
+
+### Toggle pass/fail feature flag
+
+Use Admin -> Feature Flags to update Remote Config `pass_fail_enabled`.
+
+### Recompute stats counters
+
+Use Admin -> Dashboard -> `Recompute Stats`.
+This calls `adminBackfillStats` to refresh aggregated counters.
+
+## Troubleshooting
+
+- `permission-denied` in admin app: ensure current user doc has `isAdmin: true`.
+- Feature flag not changing in mobile immediately: Remote Config uses fetch interval caching.
+- Function deploy errors for runtime: ensure Node 20 is used in local environment and CI.
+- Firestore index errors: deploy indexes with `firebase deploy --only firestore:indexes`.
+
+## iOS Onboarding Checklist
+
+1. Run FlutterFire configure for both platforms:
+
+```bash
+flutterfire configure --platforms=android,ios
+```
+
+2. Add `GoogleService-Info.plist` to `ios/Runner/` using Xcode (drag into Runner target).
+3. In Firebase Console, enable Apple Sign-In provider and implement the existing auth TODO:
+
+```dart
+// TODO: Apple Sign-In — implement when iOS build begins
+```
+
+4. Set iOS deployment target to `16.0` in Xcode project settings and `ios/Podfile`.
+5. Configure WidgetKit extension for the home widget using the Phase 4 TODO guidance:
+   - Create WidgetKit extension target
+   - Implement AppIntent tap-to-checkin handling
+   - Wire `home_widget` iOS UserDefaults channel
+6. Confirm bundle identifier matches `com.xperiments.app`.
+7. Build/archive for TestFlight, upload in Xcode Organizer, then submit to App Store review.
