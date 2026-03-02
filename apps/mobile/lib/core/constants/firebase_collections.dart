@@ -2,6 +2,7 @@ class FirebaseCollections {
   const FirebaseCollections._();
 
   static const String users = 'users';
+  static const String devices = 'devices';
   static const String labs = 'labs';
   static const String experiments = 'experiments';
   static const String checkins = 'checkins';

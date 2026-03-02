@@ -1,3 +1,0 @@
-class NotificationsFeaturePlaceholder {
-  const NotificationsFeaturePlaceholder();
-}

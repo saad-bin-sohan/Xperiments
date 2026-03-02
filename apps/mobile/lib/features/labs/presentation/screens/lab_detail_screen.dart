@@ -9,10 +9,13 @@ import 'package:mobile/core/widgets/app_async_view.dart';
 import 'package:mobile/core/widgets/app_empty_state.dart';
 import 'package:mobile/features/experiments/domain/entities/experiment.dart';
 import 'package:mobile/features/experiments/presentation/providers/experiments_providers.dart';
+import 'package:mobile/features/journal/presentation/widgets/lab_journal_section.dart';
 import 'package:mobile/features/labs/domain/entities/lab.dart';
 import 'package:mobile/features/labs/domain/entities/lab_stats.dart';
 import 'package:mobile/features/labs/presentation/controllers/labs_action_controller.dart';
 import 'package:mobile/features/labs/presentation/providers/labs_providers.dart';
+import 'package:mobile/features/profile/domain/entities/user_preferences.dart';
+import 'package:mobile/features/profile/presentation/providers/profile_providers.dart';
 
 class LabDetailScreen extends ConsumerWidget {
   const LabDetailScreen({super.key, required this.labId});
@@ -60,6 +63,7 @@ class _LabDetailBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final statsAsync = ref.watch(labStatsProvider(lab.id));
     final experimentsAsync = ref.watch(labExperimentsProvider(lab.id));
+    final preferencesAsync = ref.watch(currentUserPreferencesProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -166,6 +170,18 @@ class _LabDetailBody extends ConsumerWidget {
                   );
                 }).toList(),
               );
+            },
+          ),
+          const SizedBox(height: AppSizes.spacingMd),
+          AppAsyncView<UserPreferences>(
+            value: preferencesAsync,
+            loading: const SizedBox.shrink(),
+            data: (preferences) {
+              if (!preferences.journalEnabled) {
+                return const SizedBox.shrink();
+              }
+
+              return LabJournalSection(labId: lab.id);
             },
           ),
         ],

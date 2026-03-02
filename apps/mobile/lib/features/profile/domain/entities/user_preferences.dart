@@ -38,6 +38,7 @@ abstract class UserPreferences with _$UserPreferences {
     @Default(false) bool journalEnabled,
     @Default(false) bool interferenceLogEnabled,
     @Default(false) bool passFailUiEnabled,
+    String? timezone,
   }) = _UserPreferences;
 }
 
@@ -52,5 +53,6 @@ abstract class UserPreferencesPatch with _$UserPreferencesPatch {
     bool? journalEnabled,
     bool? interferenceLogEnabled,
     bool? passFailUiEnabled,
+    String? timezone,
   }) = _UserPreferencesPatch;
 }

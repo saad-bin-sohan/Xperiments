@@ -15,6 +15,7 @@ abstract class UserPreferencesModel with _$UserPreferencesModel {
     @Default(false) bool journalEnabled,
     @Default(false) bool interferenceLogEnabled,
     @Default(false) bool passFailUiEnabled,
+    String? timezone,
   }) = _UserPreferencesModel;
 
   factory UserPreferencesModel.fromMap(Map<String, dynamic> map) {
@@ -31,6 +32,7 @@ abstract class UserPreferencesModel with _$UserPreferencesModel {
       journalEnabled: map['journalEnabled'] as bool? ?? false,
       interferenceLogEnabled: map['interferenceLogEnabled'] as bool? ?? false,
       passFailUiEnabled: map['passFailUiEnabled'] as bool? ?? false,
+      timezone: map['timezone'] as String?,
     );
   }
 }
@@ -46,6 +48,7 @@ extension UserPreferencesModelX on UserPreferencesModel {
       journalEnabled: journalEnabled,
       interferenceLogEnabled: interferenceLogEnabled,
       passFailUiEnabled: passFailUiEnabled,
+      timezone: timezone,
     );
   }
 
@@ -59,6 +62,7 @@ extension UserPreferencesModelX on UserPreferencesModel {
       'journalEnabled': journalEnabled,
       'interferenceLogEnabled': interferenceLogEnabled,
       'passFailUiEnabled': passFailUiEnabled,
+      'timezone': timezone,
     };
   }
 }
@@ -74,6 +78,7 @@ extension UserPreferencesEntityX on UserPreferences {
       journalEnabled: journalEnabled,
       interferenceLogEnabled: interferenceLogEnabled,
       passFailUiEnabled: passFailUiEnabled,
+      timezone: timezone,
     );
   }
 }

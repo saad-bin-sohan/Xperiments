@@ -22,11 +22,14 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
 
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
+
 @Riverpod(keepAlive: true)
 GoRouter appRouter(Ref ref) {
   final authRepository = ref.watch(authRepositoryProvider);
 
   return GoRouter(
+    navigatorKey: rootNavigatorKey,
     initialLocation: RoutePaths.experiments,
     refreshListenable: GoRouterRefreshStream(authRepository.observeAuthState()),
     redirect: (BuildContext context, GoRouterState state) {

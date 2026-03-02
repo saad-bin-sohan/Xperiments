@@ -6,6 +6,8 @@
 **/build/
 **/.pub-cache/
 **/.pub/
+**/node_modules/
+functions/lib/
 
 # IDE
 .idea/

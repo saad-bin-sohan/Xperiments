@@ -78,6 +78,9 @@ class PreferencesRemoteDataSource {
     if (patch.passFailUiEnabled != null) {
       serializedPatch['passFailUiEnabled'] = patch.passFailUiEnabled;
     }
+    if (patch.timezone != null) {
+      serializedPatch['timezone'] = patch.timezone;
+    }
 
     if (serializedPatch.isEmpty) {
       return;

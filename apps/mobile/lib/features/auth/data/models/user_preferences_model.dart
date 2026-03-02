@@ -13,6 +13,7 @@ abstract class UserPreferencesModel with _$UserPreferencesModel {
     @Default(<String>[]) List<String> friendEmails,
     @Default(false) bool journalEnabled,
     @Default(false) bool interferenceLogEnabled,
+    String? timezone,
   }) = _UserPreferencesModel;
 }
 
@@ -26,6 +27,7 @@ extension UserPreferencesModelX on UserPreferencesModel {
       'friendEmails': friendEmails,
       'journalEnabled': journalEnabled,
       'interferenceLogEnabled': interferenceLogEnabled,
+      'timezone': timezone,
     };
   }
 }

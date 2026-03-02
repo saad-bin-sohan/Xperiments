@@ -227,7 +227,6 @@ class _ProfileContent extends ConsumerWidget {
             SwitchListTile.adaptive(
               value: preferences.friendAccountabilityEnabled,
               title: const Text('Friend accountability notifications'),
-              // TODO: Wire notification delivery in Phase 4 (FCM + Functions).
               onChanged: isBusy
                   ? null
                   : (bool value) {
@@ -304,7 +303,6 @@ class _ProfileContent extends ConsumerWidget {
             SwitchListTile.adaptive(
               value: preferences.journalEnabled,
               title: const Text('Standalone Journal'),
-              // TODO: Render standalone journal inside each lab screen in Phase 4.
               onChanged: isBusy
                   ? null
                   : (bool value) {

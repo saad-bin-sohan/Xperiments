@@ -1,3 +1,0 @@
-class JournalFeaturePlaceholder {
-  const JournalFeaturePlaceholder();
-}

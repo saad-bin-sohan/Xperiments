@@ -42,7 +42,7 @@ final class CheckinFlowControllerProvider
 }
 
 String _$checkinFlowControllerHash() =>
-    r'278f441ed1b5eb348df671eb6f431ba252a3cf52';
+    r'e6dc32419207cc9c1be14f1328b7e8a81e47c807';
 
 abstract class _$CheckinFlowController extends $Notifier<AsyncValue<void>> {
   AsyncValue<void> build();
