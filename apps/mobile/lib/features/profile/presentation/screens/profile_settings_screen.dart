@@ -6,6 +6,8 @@ import 'package:mobile/core/theme/theme_mode_controller.dart';
 import 'package:mobile/core/widgets/app_async_view.dart';
 import 'package:mobile/core/widgets/app_empty_state.dart';
 import 'package:mobile/features/auth/presentation/providers/auth_providers.dart';
+import 'package:mobile/features/history/domain/entities/summary_text_result.dart';
+import 'package:mobile/features/history/presentation/providers/history_providers.dart';
 import 'package:mobile/features/profile/domain/entities/user_preferences.dart';
 import 'package:mobile/features/profile/presentation/controllers/profile_controller.dart';
 import 'package:mobile/features/profile/presentation/providers/profile_providers.dart';
@@ -341,36 +343,85 @@ class _ProfileContent extends ConsumerWidget {
           title: 'Data',
           children: <Widget>[
             FilledButton.tonal(
-              onPressed: () {
-                // TODO: Implement monthly summary computation in Phase 3.
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      'Monthly summary will be available in Phase 3.',
-                    ),
-                  ),
-                );
-              },
+              onPressed: () => _openSummarySheet(context, ref, monthly: true),
               child: const Text('View This Month'),
             ),
             const SizedBox(height: AppSizes.spacingSm),
             FilledButton.tonal(
-              onPressed: () {
-                // TODO: Implement yearly summary computation in Phase 3.
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      'Yearly summary will be available in Phase 3.',
-                    ),
-                  ),
-                );
-              },
+              onPressed: () => _openSummarySheet(context, ref, monthly: false),
               child: const Text('View This Year'),
             ),
           ],
         ),
         const SizedBox(height: AppSizes.spacingLg),
       ],
+    );
+  }
+
+  Future<void> _openSummarySheet(
+    BuildContext context,
+    WidgetRef ref, {
+    required bool monthly,
+  }) async {
+    if (monthly) {
+      ref.invalidate(monthlySummaryProvider);
+    } else {
+      ref.invalidate(yearlySummaryProvider);
+    }
+
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (sheetContext) {
+        return Padding(
+          padding: const EdgeInsets.all(AppSizes.spacingMd),
+          child: FutureBuilder<SummaryTextResult>(
+            future: monthly
+                ? ref.read(monthlySummaryProvider.future)
+                : ref.read(yearlySummaryProvider.future),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const SizedBox(
+                  height: 220,
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
+
+              if (snapshot.hasError) {
+                return SizedBox(
+                  height: 220,
+                  child: Center(child: Text(snapshot.error.toString())),
+                );
+              }
+
+              final result = snapshot.data;
+              if (result == null) {
+                return const SizedBox(
+                  height: 220,
+                  child: Center(child: Text('No summary available.')),
+                );
+              }
+
+              return SizedBox(
+                height: 260,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      monthly ? 'Monthly Summary' : 'Yearly Summary',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: AppSizes.spacingSm),
+                    Expanded(
+                      child: SingleChildScrollView(child: Text(result.text)),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 

@@ -1,0 +1,64 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'checkin_flow_controller.dart';
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(CheckinFlowController)
+const checkinFlowControllerProvider = CheckinFlowControllerProvider._();
+
+final class CheckinFlowControllerProvider
+    extends $NotifierProvider<CheckinFlowController, AsyncValue<void>> {
+  const CheckinFlowControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'checkinFlowControllerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$checkinFlowControllerHash();
+
+  @$internal
+  @override
+  CheckinFlowController create() => CheckinFlowController();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AsyncValue<void> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AsyncValue<void>>(value),
+    );
+  }
+}
+
+String _$checkinFlowControllerHash() =>
+    r'278f441ed1b5eb348df671eb6f431ba252a3cf52';
+
+abstract class _$CheckinFlowController extends $Notifier<AsyncValue<void>> {
+  AsyncValue<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<AsyncValue<void>, AsyncValue<void>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<void>, AsyncValue<void>>,
+              AsyncValue<void>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

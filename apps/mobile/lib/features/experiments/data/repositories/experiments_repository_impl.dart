@@ -60,6 +60,19 @@ class ExperimentsRepositoryImpl implements ExperimentsRepository {
   }
 
   @override
+  Future<void> endExperimentWithOptionalReflection({
+    required String experimentId,
+    required DateTime now,
+    String? finalReflection,
+  }) {
+    return _remoteDataSource.endExperimentWithOptionalReflection(
+      experimentId: experimentId,
+      now: now,
+      finalReflection: finalReflection,
+    );
+  }
+
+  @override
   Future<void> setPassFail(String experimentId, PassFailResult? result) {
     return _remoteDataSource.setPassFail(experimentId, result);
   }

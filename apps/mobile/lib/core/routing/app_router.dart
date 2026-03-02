@@ -6,10 +6,14 @@ import 'package:mobile/core/routing/route_paths.dart';
 import 'package:mobile/core/routing/shell_scaffold.dart';
 import 'package:mobile/features/auth/presentation/providers/auth_providers.dart';
 import 'package:mobile/features/auth/presentation/screens/auth_screen.dart';
+import 'package:mobile/features/checkin/presentation/screens/checkin_screen.dart';
+import 'package:mobile/features/experiments/presentation/models/experiment_form_prefill.dart';
 import 'package:mobile/features/experiments/presentation/screens/experiment_detail_screen.dart';
 import 'package:mobile/features/experiments/presentation/screens/experiment_form_screen.dart';
 import 'package:mobile/features/experiments/presentation/screens/experiments_tab_screen.dart';
 import 'package:mobile/features/gallery/presentation/screens/gallery_tab_screen.dart';
+import 'package:mobile/features/gallery/presentation/screens/gallery_template_screen.dart';
+import 'package:mobile/features/history/presentation/screens/history_experiment_detail_screen.dart';
 import 'package:mobile/features/history/presentation/screens/history_tab_screen.dart';
 import 'package:mobile/features/labs/presentation/screens/lab_detail_screen.dart';
 import 'package:mobile/features/labs/presentation/screens/lab_form_screen.dart';
@@ -118,7 +122,12 @@ GoRouter appRouter(Ref ref) {
         path: RoutePaths.experimentNewPattern,
         builder: (BuildContext context, GoRouterState state) {
           final labId = state.pathParameters['labId']!;
-          return ExperimentFormScreen(initialLabId: labId);
+          return ExperimentFormScreen(
+            initialLabId: labId,
+            prefill: state.extra is ExperimentFormPrefill
+                ? state.extra! as ExperimentFormPrefill
+                : null,
+          );
         },
       ),
       GoRoute(
@@ -126,6 +135,32 @@ GoRouter appRouter(Ref ref) {
         builder: (BuildContext context, GoRouterState state) {
           final experimentId = state.pathParameters['experimentId']!;
           return ExperimentDetailScreen(experimentId: experimentId);
+        },
+      ),
+      GoRoute(
+        path: RoutePaths.experimentCheckinPattern,
+        builder: (BuildContext context, GoRouterState state) {
+          final experimentId = state.pathParameters['experimentId']!;
+          final dateParam = state.uri.queryParameters['date'];
+          final date = dateParam == null
+              ? DateTime.now()
+              : DateTime.tryParse(dateParam) ?? DateTime.now();
+
+          return CheckinScreen(experimentId: experimentId, date: date);
+        },
+      ),
+      GoRoute(
+        path: RoutePaths.historyExperimentDetailPattern,
+        builder: (BuildContext context, GoRouterState state) {
+          final experimentId = state.pathParameters['experimentId']!;
+          return HistoryExperimentDetailScreen(experimentId: experimentId);
+        },
+      ),
+      GoRoute(
+        path: RoutePaths.galleryTemplatePattern,
+        builder: (BuildContext context, GoRouterState state) {
+          final templateId = state.pathParameters['templateId']!;
+          return GalleryTemplateScreen(templateId: templateId);
         },
       ),
     ],

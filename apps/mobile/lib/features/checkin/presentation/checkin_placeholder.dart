@@ -1,3 +1,0 @@
-class CheckinFeaturePlaceholder {
-  const CheckinFeaturePlaceholder();
-}

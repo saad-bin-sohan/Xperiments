@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/core/constants/app_sizes.dart';
+import 'package:mobile/core/routing/route_paths.dart';
 import 'package:mobile/core/utils/date_utils.dart';
 import 'package:mobile/core/widgets/app_async_view.dart';
 import 'package:mobile/core/widgets/app_empty_state.dart';
@@ -188,15 +190,9 @@ class _ExperimentDetailBody extends ConsumerWidget {
             width: double.infinity,
             child: FilledButton.tonal(
               onPressed: experiment.status == ExperimentStatus.active
-                  ? () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Check-in flow will be added in Phase 3.',
-                          ),
-                        ),
-                      );
-                    }
+                  ? () => context.push(
+                      RoutePaths.experimentCheckin(experiment.id),
+                    )
                   : null,
               child: const Text('Check-in'),
             ),
@@ -470,6 +466,30 @@ class _ExperimentDetailBody extends ConsumerWidget {
             _legend(context, 'Pending', CalendarDayState.duePending),
           ],
         ),
+        if (experiment.status == ExperimentStatus.active &&
+            selectedDay != null &&
+            !AppDateUtils.startOfDay(
+              selectedDay!,
+            ).isAfter(AppDateUtils.startOfDay(DateTime.now())))
+          Padding(
+            padding: const EdgeInsets.only(top: AppSizes.spacingSm),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: FilledButton.tonal(
+                onPressed: () {
+                  final day = AppDateUtils.startOfDay(selectedDay!);
+                  context.push(
+                    RoutePaths.experimentCheckin(experiment.id, date: day),
+                  );
+                },
+                child: Text(
+                  AppDateUtils.isSameDay(selectedDay!, DateTime.now())
+                      ? 'Log today'
+                      : 'Log selected day',
+                ),
+              ),
+            ),
+          ),
         const SizedBox(height: AppSizes.spacingMd),
         Wrap(
           spacing: AppSizes.spacingSm,
@@ -661,10 +681,46 @@ class _ExperimentDetailBody extends ConsumerWidget {
       },
     );
 
-    if (confirm == true) {
+    if (confirm == true && context.mounted) {
+      final reflectionController = TextEditingController();
+      final reflection = await showDialog<String?>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Final reflection (optional)'),
+            content: TextField(
+              controller: reflectionController,
+              minLines: 3,
+              maxLines: 6,
+              decoration: const InputDecoration(
+                hintText:
+                    'Take a moment to reflect. What did you learn from this experiment?',
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(null),
+                child: const Text('Skip'),
+              ),
+              FilledButton(
+                onPressed: () =>
+                    Navigator.of(context).pop(reflectionController.text.trim()),
+                child: const Text('Save & End'),
+              ),
+            ],
+          );
+        },
+      );
+
+      reflectionController.dispose();
       await ref
           .read(experimentActionControllerProvider.notifier)
-          .end(experimentId);
+          .end(
+            experimentId,
+            finalReflection: reflection?.trim().isEmpty ?? true
+                ? null
+                : reflection,
+          );
     }
   }
 

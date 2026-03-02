@@ -21,6 +21,12 @@ abstract class ExperimentsRepository {
 
   Future<void> endExperiment(String experimentId, DateTime now);
 
+  Future<void> endExperimentWithOptionalReflection({
+    required String experimentId,
+    required DateTime now,
+    String? finalReflection,
+  });
+
   Future<void> setPassFail(String experimentId, PassFailResult? result);
 
   Future<void> replaceSubtasks(

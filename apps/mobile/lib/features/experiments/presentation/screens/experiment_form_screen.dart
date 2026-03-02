@@ -9,6 +9,7 @@ import 'package:mobile/features/auth/presentation/providers/auth_providers.dart'
 import 'package:mobile/features/experiments/domain/entities/experiment.dart';
 import 'package:mobile/features/experiments/domain/entities/experiment_draft.dart';
 import 'package:mobile/features/experiments/presentation/controllers/experiment_form_controller.dart';
+import 'package:mobile/features/experiments/presentation/models/experiment_form_prefill.dart';
 import 'package:mobile/features/experiments/presentation/providers/experiments_providers.dart';
 import 'package:mobile/features/labs/domain/entities/lab.dart';
 import 'package:mobile/features/labs/presentation/providers/labs_providers.dart';
@@ -16,9 +17,10 @@ import 'package:mobile/features/profile/presentation/providers/profile_providers
 import 'package:uuid/uuid.dart';
 
 class ExperimentFormScreen extends ConsumerStatefulWidget {
-  const ExperimentFormScreen({super.key, this.initialLabId});
+  const ExperimentFormScreen({super.key, this.initialLabId, this.prefill});
 
   final String? initialLabId;
+  final ExperimentFormPrefill? prefill;
 
   @override
   ConsumerState<ExperimentFormScreen> createState() =>
@@ -62,12 +64,24 @@ class _ExperimentFormScreenState extends ConsumerState<ExperimentFormScreen> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController();
-    _hypothesisController = TextEditingController();
+    _nameController = TextEditingController(text: widget.prefill?.name ?? '');
+    _hypothesisController = TextEditingController(
+      text: widget.prefill?.hypothesis ?? '',
+    );
     _motivationController = TextEditingController();
-    _durationController = TextEditingController(text: '30');
+    _durationController = TextEditingController(
+      text: widget.prefill?.durationValue?.toString() ?? '30',
+    );
     _interferenceController = TextEditingController();
     _selectedLabId = widget.initialLabId;
+
+    if (widget.prefill != null) {
+      _frequency = widget.prefill!.frequency;
+      _isOpenEnded = widget.prefill!.isOpenEnded;
+      if (widget.prefill!.durationUnit != null) {
+        _durationUnit = widget.prefill!.durationUnit!;
+      }
+    }
   }
 
   @override
@@ -101,7 +115,11 @@ class _ExperimentFormScreenState extends ConsumerState<ExperimentFormScreen> {
     final isBusy = ref.watch(experimentFormControllerProvider).isLoading;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('New Experiment')),
+      appBar: AppBar(
+        title: Text(
+          widget.prefill == null ? 'New Experiment' : 'Start from Template',
+        ),
+      ),
       body: AppAsyncView<List<Lab>>(
         value: labsAsync,
         data: (labs) {

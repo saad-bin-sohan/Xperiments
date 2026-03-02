@@ -118,7 +118,7 @@ class _TodayCard extends ConsumerWidget {
                       subtitle: Text(item.labName),
                       onTap: () {
                         context.push(
-                          RoutePaths.experimentDetail(item.experiment.id),
+                          RoutePaths.experimentCheckin(item.experiment.id),
                         );
                       },
                     );

@@ -43,7 +43,7 @@ final class ExperimentActionControllerProvider
 }
 
 String _$experimentActionControllerHash() =>
-    r'de86125bb87cc3675edb4bbc14ae73bdeef44992';
+    r'b0758db08127df5283c4bd5de59b28d50294d284';
 
 abstract class _$ExperimentActionController
     extends $Notifier<AsyncValue<void>> {

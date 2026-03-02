@@ -8,4 +8,16 @@ class EndExperiment {
   Future<void> call(String experimentId, DateTime now) {
     return _repository.endExperiment(experimentId, now);
   }
+
+  Future<void> withOptionalReflection({
+    required String experimentId,
+    required DateTime now,
+    String? finalReflection,
+  }) {
+    return _repository.endExperimentWithOptionalReflection(
+      experimentId: experimentId,
+      now: now,
+      finalReflection: finalReflection,
+    );
+  }
 }

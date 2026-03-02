@@ -168,6 +168,18 @@ class ExperimentsRemoteDataSource {
   }
 
   Future<void> endExperiment(String experimentId, DateTime now) async {
+    await endExperimentWithOptionalReflection(
+      experimentId: experimentId,
+      now: now,
+      finalReflection: null,
+    );
+  }
+
+  Future<void> endExperimentWithOptionalReflection({
+    required String experimentId,
+    required DateTime now,
+    String? finalReflection,
+  }) async {
     final snapshot = await _experimentsCollection.doc(experimentId).get();
     if (!snapshot.exists) {
       return;
@@ -199,6 +211,7 @@ class ExperimentsRemoteDataSource {
       'status': newStatus.value,
       'completedAt': now,
       'pausedAt': null,
+      'finalReflection': _nullable(finalReflection),
       'pauseHistory': _serializePauseHistory(history),
     });
   }

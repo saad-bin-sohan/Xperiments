@@ -31,13 +31,18 @@ class ExperimentActionController extends _$ExperimentActionController {
     });
   }
 
-  Future<void> end(String experimentId) async {
+  Future<void> end(String experimentId, {String? finalReflection}) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       await ref
           .read(endExperimentUseCaseProvider)
-          .call(experimentId, DateTime.now());
+          .withOptionalReflection(
+            experimentId: experimentId,
+            now: DateTime.now(),
+            finalReflection: finalReflection,
+          );
       ref.invalidate(experimentAnalyticsProvider(experimentId));
+      ref.invalidate(experimentByIdProvider(experimentId));
     });
   }
 

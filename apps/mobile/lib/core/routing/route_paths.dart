@@ -14,6 +14,11 @@ class RoutePaths {
       '/experiments/labs/:labId/experiments/new';
   static const String experimentDetailPattern =
       '/experiments/experiments/:experimentId';
+  static const String experimentCheckinPattern =
+      '/experiments/experiments/:experimentId/checkin';
+  static const String historyExperimentDetailPattern =
+      '/history/experiments/:experimentId';
+  static const String galleryTemplatePattern = '/gallery/templates/:templateId';
 
   static String labDetail(String labId) => '/experiments/labs/$labId';
 
@@ -24,4 +29,20 @@ class RoutePaths {
 
   static String experimentDetail(String experimentId) =>
       '/experiments/experiments/$experimentId';
+
+  static String experimentCheckin(String experimentId, {DateTime? date}) {
+    final path = '/experiments/experiments/$experimentId/checkin';
+    if (date == null) {
+      return path;
+    }
+    final month = date.month.toString().padLeft(2, '0');
+    final day = date.day.toString().padLeft(2, '0');
+    return '$path?date=${date.year}-$month-$day';
+  }
+
+  static String historyExperimentDetail(String experimentId) =>
+      '/history/experiments/$experimentId';
+
+  static String galleryTemplate(String templateId) =>
+      '/gallery/templates/$templateId';
 }
