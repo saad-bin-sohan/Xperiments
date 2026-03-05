@@ -20,15 +20,13 @@ Xperiments is a private, minimal self-improvement experiment tracker built with 
 
 ## Firebase projects and aliases
 
-This repo expects two Firebase projects:
+Current setup uses one Firebase project:
 
 - `xperiments-dev`
-- `xperiments-prod`
 
 Root `.firebaserc` maps aliases:
 
 - `dev -> xperiments-dev`
-- `prod -> xperiments-prod`
 
 ## One-time Firebase setup
 
@@ -39,8 +37,8 @@ Root `.firebaserc` maps aliases:
 3. Create Firebase Storage bucket.
 4. Create Remote Config parameter:
    - `pass_fail_enabled` default `false`
-5. Register Android app with package `com.xperiments.app` in both projects.
-6. Register a Firebase Web app in both projects for `apps/admin` and store config values.
+5. Register Android app with package `com.xperiments.app`.
+6. Register a Firebase Web app for `apps/admin` and store config values.
 
 ## Mobile app setup (`apps/mobile`)
 
@@ -51,14 +49,13 @@ cd apps/mobile
 flutter pub get
 ```
 
-2. Generate FlutterFire options per project and update:
+2. Generate FlutterFire options and update:
 
 - `lib/core/firebase/firebase_options_dev.dart`
-- `lib/core/firebase/firebase_options_prod.dart`
+- `android/app/google-services.json`
 
 ```bash
 flutterfire configure --project=xperiments-dev --platforms=android
-flutterfire configure --project=xperiments-prod --platforms=android
 ```
 
 3. Generate Riverpod/Freezed files:
@@ -79,8 +76,19 @@ flutter run --dart-define=FLAVOR=prod
 
 From `apps/mobile`:
 
+1. Configure upload signing:
+
 ```bash
-flutter build apk --release --dart-define=FLAVOR=prod
+cp android/key.properties.example android/key.properties
+```
+
+Then set real keystore values in `android/key.properties`.
+
+2. Build:
+
+```bash
+./tool/check_release_readiness.sh
+flutter build apk --release --dart-define=FLAVOR=dev
 ```
 
 APK output:

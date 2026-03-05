@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mobile/core/config/env.dart';
 import 'package:mobile/core/error/app_exception.dart';
+import 'package:mobile/core/firebase/google_sign_in_client_ids.dart';
 import 'package:mobile/features/auth/data/models/auth_user_model.dart';
 
 class AuthRemoteDataSource {
@@ -40,7 +42,9 @@ class AuthRemoteDataSource {
 
       return AuthUserModel.fromFirebaseUser(user);
     } on FirebaseAuthException catch (error) {
-      throw AppException(error.message ?? 'Unable to sign in.');
+      throw AppException(
+        _firebaseAuthMessage(error, fallback: 'Unable to sign in.'),
+      );
     }
   }
 
@@ -69,7 +73,9 @@ class AuthRemoteDataSource {
 
       return AuthUserModel.fromFirebaseUser(refreshedUser);
     } on FirebaseAuthException catch (error) {
-      throw AppException(error.message ?? 'Unable to create account.');
+      throw AppException(
+        _firebaseAuthMessage(error, fallback: 'Unable to create account.'),
+      );
     }
   }
 
@@ -91,9 +97,11 @@ class AuthRemoteDataSource {
 
       return AuthUserModel.fromFirebaseUser(user);
     } on FirebaseAuthException catch (error) {
-      throw AppException(error.message ?? 'Google sign-in failed.');
+      throw AppException(
+        _firebaseAuthMessage(error, fallback: 'Google sign-in failed.'),
+      );
     } on GoogleSignInException catch (error) {
-      throw AppException(error.description ?? 'Google sign-in failed.');
+      throw AppException(_googleSignInMessage(error));
     }
   }
 
@@ -111,7 +119,57 @@ class AuthRemoteDataSource {
       return;
     }
 
-    await _googleSignIn.initialize();
+    final String? serverClientId = GoogleSignInClientIds.forFlavor(Env.flavor);
+    if (serverClientId == null) {
+      final flavor = Env.flavor.id;
+      throw AppException(
+        'Google Sign-In server client ID is missing for FLAVOR=$flavor. '
+        'Set GOOGLE_SERVER_CLIENT_ID or update android/app/google-services.json '
+        'with a web OAuth client.',
+      );
+    }
+
+    await _googleSignIn.initialize(serverClientId: serverClientId);
     _googleInitialized = true;
+  }
+
+  String _firebaseAuthMessage(
+    FirebaseAuthException error, {
+    required String fallback,
+  }) {
+    final code = error.code.toLowerCase();
+    final message = error.message ?? '';
+    final normalizedMessage = message.toLowerCase();
+
+    if (code == 'operation-not-allowed') {
+      return 'Enable Email/Password and Google in Firebase Authentication for '
+          'this project.';
+    }
+
+    if (code == 'invalid-api-key' ||
+        normalizedMessage.contains('api key not valid')) {
+      return 'Firebase config mismatch: rebuild with matching Firebase options '
+          'and android/app/google-services.json.';
+    }
+
+    return message.isNotEmpty ? message : fallback;
+  }
+
+  String _googleSignInMessage(GoogleSignInException error) {
+    final description = error.description ?? '';
+    final normalizedDescription = description.toLowerCase();
+
+    if (normalizedDescription.contains('serverclientid must be provided')) {
+      return 'Google Sign-In Android config is incomplete: missing server '
+          'client ID. Ensure google-services for this FLAVOR includes a web '
+          'OAuth client (client_type: 3), then rebuild.';
+    }
+
+    if (error.code == GoogleSignInExceptionCode.clientConfigurationError) {
+      return 'Google Sign-In is misconfigured for this build. Verify package '
+          'name, SHA fingerprints, and Firebase OAuth setup.';
+    }
+
+    return description.isNotEmpty ? description : 'Google sign-in failed.';
   }
 }

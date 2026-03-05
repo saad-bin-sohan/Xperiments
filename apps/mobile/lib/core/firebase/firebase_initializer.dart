@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:mobile/core/config/app_flavor.dart';
 import 'package:mobile/core/config/env.dart';
 import 'package:mobile/core/firebase/firebase_options_dev.dart';
-import 'package:mobile/core/firebase/firebase_options_prod.dart';
 import 'package:mobile/core/firebase/remote_config_service.dart';
 
 // TODO: iOS Firebase Config — when iOS build begins (~1 week):
@@ -19,7 +18,8 @@ class FirebaseInitializer {
       case AppFlavor.dev:
         options = DefaultFirebaseOptionsDev.currentPlatform;
       case AppFlavor.prod:
-        options = DefaultFirebaseOptionsProd.currentPlatform;
+        // Single Firebase project mode: prod flavor currently points to dev project.
+        options = DefaultFirebaseOptionsDev.currentPlatform;
     }
 
     await Firebase.initializeApp(options: options);

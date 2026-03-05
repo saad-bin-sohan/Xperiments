@@ -28,11 +28,11 @@ class DefaultFirebaseOptionsDev {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'DEV_ANDROID_API_KEY',
-    appId: '1:000000000000:android:dev000000000000',
-    messagingSenderId: '000000000000',
+    apiKey: 'AIzaSyDlL89dMrCYEL9y8YGrjxfV_XIXi4LxDEg',
+    appId: '1:506602598766:android:bc5d19f63df91bd359517f',
+    messagingSenderId: '506602598766',
     projectId: 'xperiments-dev',
-    storageBucket: 'xperiments-dev.appspot.com',
+    storageBucket: 'xperiments-dev.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(

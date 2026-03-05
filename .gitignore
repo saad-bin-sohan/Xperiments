@@ -19,5 +19,16 @@ functions/lib/
 # macOS
 .DS_Store
 
-# Firebase
+# Firebase logs / local generated config
 firebase-debug.log
+firebase-debug.*.log
+apps/mobile/android/app/google-services.json
+apps/mobile/android/app/google-services.*.json
+apps/mobile/ios/Runner/GoogleService-Info.plist
+apps/mobile/ios/Runner/GoogleService-Info.*.plist
+apps/mobile/lib/firebase_options.dart
+
+# Android signing (local secrets)
+apps/mobile/android/key.properties
+apps/mobile/android/*.jks
+apps/mobile/android/*.keystore

@@ -28,19 +28,20 @@ class DefaultFirebaseOptionsProd {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'PROD_ANDROID_API_KEY',
-    appId: '1:000000000000:android:prod000000000000',
-    messagingSenderId: '000000000000',
-    projectId: 'xperiments-prod',
-    storageBucket: 'xperiments-prod.appspot.com',
+    // Single Firebase project mode: keep prod flavor aligned with dev project.
+    apiKey: 'AIzaSyDlL89dMrCYEL9y8YGrjxfV_XIXi4LxDEg',
+    appId: '1:506602598766:android:bc5d19f63df91bd359517f',
+    messagingSenderId: '506602598766',
+    projectId: 'xperiments-dev',
+    storageBucket: 'xperiments-dev.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'PROD_IOS_API_KEY',
-    appId: '1:000000000000:ios:prod000000000000',
+    apiKey: 'DEV_IOS_API_KEY',
+    appId: '1:000000000000:ios:dev000000000000',
     messagingSenderId: '000000000000',
-    projectId: 'xperiments-prod',
-    storageBucket: 'xperiments-prod.appspot.com',
+    projectId: 'xperiments-dev',
+    storageBucket: 'xperiments-dev.appspot.com',
     iosBundleId: 'com.xperiments.app',
   );
 }

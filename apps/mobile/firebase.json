@@ -5,5 +5,36 @@
   },
   "storage": {
     "rules": "storage.rules"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "xperiments-dev",
+          "appId": "1:506602598766:android:bc5d19f63df91bd359517f",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "xperiments-dev",
+          "configurations": {
+            "android": "1:506602598766:android:bc5d19f63df91bd359517f"
+          }
+        },
+        "lib/core/firebase/firebase_options_dev.dart": {
+          "projectId": "xperiments-dev",
+          "configurations": {
+            "android": "1:506602598766:android:bc5d19f63df91bd359517f"
+          }
+        },
+        "lib/core/firebase/firebase_options_prod.dart": {
+          "projectId": "xperiments-dev",
+          "configurations": {
+            "android": "1:506602598766:android:bc5d19f63df91bd359517f"
+          }
+        }
+      }
+    }
   }
 }
