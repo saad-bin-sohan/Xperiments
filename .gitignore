@@ -32,3 +32,15 @@ apps/mobile/lib/firebase_options.dart
 apps/mobile/android/key.properties
 apps/mobile/android/*.jks
 apps/mobile/android/*.keystore
+
+# Environment files (keep examples tracked)
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.*.example
+
+# Firebase local artifacts
+.firebase/
+**/.firebase/
+firestore-debug.log
+ui-debug.log

@@ -24,6 +24,9 @@ class AppAsyncView<T> extends StatelessWidget {
       error: (Object error, StackTrace stackTrace) =>
           AppErrorState(message: error.toString(), onRetry: onRetry),
       data: data,
+      skipLoadingOnReload: true,
+      skipLoadingOnRefresh: false,
+      skipError: true,
     );
   }
 }

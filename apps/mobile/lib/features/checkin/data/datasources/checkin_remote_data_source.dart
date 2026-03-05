@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/constants/firebase_collections.dart';
@@ -9,12 +8,12 @@ import 'package:mobile/core/utils/date_utils.dart';
 import 'package:mobile/features/checkin/data/models/checkin_model.dart';
 import 'package:mobile/features/checkin/domain/entities/checkin_draft.dart';
 import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
 class CheckinRemoteDataSource {
-  const CheckinRemoteDataSource(this._firestore, this._storage);
+  const CheckinRemoteDataSource(this._firestore);
 
   final FirebaseFirestore _firestore;
-  final FirebaseStorage _storage;
 
   CollectionReference<Map<String, dynamic>> get _experimentsCollection {
     return _firestore.collection(FirebaseCollections.experiments);
@@ -53,16 +52,24 @@ class CheckinRemoteDataSource {
     );
     String? photoUrl = existing?.photoUrl;
 
-    if (draft.photoFilePath != null &&
+    if (draft.removePhoto) {
+      await _deleteLocalPhotoIfPresent(photoUrl);
+      photoUrl = null;
+    } else if (draft.photoFilePath != null &&
         draft.photoFilePath!.trim().isNotEmpty &&
         userId != null &&
         userId.isNotEmpty) {
+      final previousPhotoUrl = photoUrl;
       photoUrl = await uploadCheckinPhoto(
         userId: userId,
         experimentId: draft.experimentId,
         date: dayStart,
         localPath: draft.photoFilePath!,
       );
+
+      if (previousPhotoUrl != null && previousPhotoUrl != photoUrl) {
+        await _deleteLocalPhotoIfPresent(previousPhotoUrl);
+      }
     }
 
     final payload = <String, dynamic>{
@@ -134,19 +141,32 @@ class CheckinRemoteDataSource {
       format: CompressFormat.jpeg,
     );
 
-    final uploadFile = compressed == null ? original : File(compressed.path);
+    final sourceFile = compressed == null ? original : File(compressed.path);
 
-    final fileName = DateFormat('yyyy-MM-dd_HHmmss').format(date);
-    final storageRef = _storage.ref().child(
-      'checkins/$userId/$experimentId/$fileName.jpg',
+    final appDocsDir = await getApplicationDocumentsDirectory();
+    final targetDir = Directory(
+      path.join(
+        appDocsDir.path,
+        'checkins',
+        _safePathSegment(userId),
+        _safePathSegment(experimentId),
+      ),
     );
+    await targetDir.create(recursive: true);
 
-    await storageRef.putFile(
-      uploadFile,
-      SettableMetadata(contentType: 'image/jpeg'),
-    );
+    final fileName =
+        '${DateFormat('yyyy-MM-dd_HHmmss').format(date)}_'
+        '${DateTime.now().millisecondsSinceEpoch}.jpg';
+    final destinationPath = path.join(targetDir.path, fileName);
+    final persisted = await sourceFile.copy(destinationPath);
 
-    return storageRef.getDownloadURL();
+    if (compressed != null) {
+      try {
+        await File(compressed.path).delete();
+      } catch (_) {}
+    }
+
+    return Uri.file(persisted.path).toString();
   }
 
   Future<CheckinModel?> _findCheckinInDayWindow(
@@ -178,5 +198,33 @@ class CheckinRemoteDataSource {
       return null;
     }
     return trimmed;
+  }
+
+  Future<void> _deleteLocalPhotoIfPresent(String? photoUrl) async {
+    if (photoUrl == null || photoUrl.trim().isEmpty) {
+      return;
+    }
+
+    try {
+      final parsed = Uri.tryParse(photoUrl);
+      if (parsed != null && parsed.scheme == 'file') {
+        final file = File(parsed.toFilePath());
+        if (await file.exists()) {
+          await file.delete();
+        }
+        return;
+      }
+
+      if (parsed == null || parsed.scheme.isEmpty) {
+        final file = File(photoUrl);
+        if (await file.exists()) {
+          await file.delete();
+        }
+      }
+    } catch (_) {}
+  }
+
+  String _safePathSegment(String input) {
+    return input.replaceAll(RegExp(r'[^A-Za-z0-9._-]'), '_');
   }
 }

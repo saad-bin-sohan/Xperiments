@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile/core/diagnostics/diagnostic_overlay.dart';
 import 'package:mobile/core/notifications/notification_route_path.dart';
 import 'package:mobile/core/routing/app_router.dart';
 import 'package:mobile/core/theme/app_theme.dart';
@@ -126,6 +127,9 @@ class _XperimentsAppState extends ConsumerState<XperimentsApp>
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
       themeMode: themeMode.asData?.value ?? ThemeMode.system,
+      builder: (BuildContext context, Widget? child) {
+        return DiagnosticOverlay(child: child ?? const SizedBox.shrink());
+      },
     );
   }
 

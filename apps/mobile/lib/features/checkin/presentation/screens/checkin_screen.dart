@@ -39,6 +39,7 @@ class _CheckinScreenState extends ConsumerState<CheckinScreen> {
   int? _rating;
   String? _photoPath;
   String? _existingPhotoUrl;
+  bool _removePhoto = false;
   bool _initializedFromExisting = false;
   Map<String, bool> _subtaskCompletions = <String, bool>{};
 
@@ -206,7 +207,7 @@ class _CheckinScreenState extends ConsumerState<CheckinScreen> {
       case 3:
         return _ratingStep();
       case 4:
-        return _photoStep(context);
+        return _photoStep();
       case 5:
         return _journalStep();
       case 6:
@@ -332,7 +333,7 @@ class _CheckinScreenState extends ConsumerState<CheckinScreen> {
     );
   }
 
-  Widget _photoStep(BuildContext context) {
+  Widget _photoStep() {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(AppSizes.spacingMd),
@@ -368,15 +369,7 @@ class _CheckinScreenState extends ConsumerState<CheckinScreen> {
                 ),
               )
             else if (_existingPhotoUrl != null)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  _existingPhotoUrl!,
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              )
+              _buildStoredPhotoPreview(_existingPhotoUrl!)
             else
               const Text('No photo selected.'),
             if (_photoPath != null || _existingPhotoUrl != null)
@@ -387,6 +380,7 @@ class _CheckinScreenState extends ConsumerState<CheckinScreen> {
                     setState(() {
                       _photoPath = null;
                       _existingPhotoUrl = null;
+                      _removePhoto = true;
                     });
                   },
                   child: const Text('Remove photo'),
@@ -491,6 +485,7 @@ class _CheckinScreenState extends ConsumerState<CheckinScreen> {
     setState(() {
       _photoPath = file.path;
       _existingPhotoUrl = null;
+      _removePhoto = false;
     });
   }
 
@@ -504,6 +499,7 @@ class _CheckinScreenState extends ConsumerState<CheckinScreen> {
       subtaskCompletions: _subtaskCompletions,
       rating: _rating,
       photoFilePath: _photoPath,
+      removePhoto: _removePhoto,
       journalEntry: _journalController.text.trim().isEmpty
           ? null
           : _journalController.text.trim(),
@@ -545,6 +541,48 @@ class _CheckinScreenState extends ConsumerState<CheckinScreen> {
     _subtaskCompletions = Map<String, bool>.from(existing.subtaskCompletions);
     _rating = existing.rating;
     _existingPhotoUrl = existing.photoUrl;
+    _removePhoto = false;
     _optimisticCompleted = existing.completed && !existing.isRestDay;
+  }
+
+  Widget _buildStoredPhotoPreview(String rawUrl) {
+    final parsed = Uri.tryParse(rawUrl);
+
+    if (parsed != null && parsed.scheme == 'file') {
+      final file = File(parsed.toFilePath());
+      if (!file.existsSync()) {
+        return const Text('Photo is unavailable on this device.');
+      }
+
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.file(
+          file,
+          height: 180,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        ),
+      );
+    }
+
+    if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.network(
+          rawUrl,
+          height: 180,
+          width: double.infinity,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return const SizedBox(
+              height: 180,
+              child: Center(child: Text('Photo preview unavailable.')),
+            );
+          },
+        ),
+      );
+    }
+
+    return const Text('Photo preview unavailable.');
   }
 }

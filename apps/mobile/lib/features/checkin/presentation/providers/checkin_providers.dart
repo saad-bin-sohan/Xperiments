@@ -20,10 +20,7 @@ class CheckinLookupArgs {
 
 @Riverpod(keepAlive: true)
 CheckinRemoteDataSource checkinRemoteDataSource(Ref ref) {
-  return CheckinRemoteDataSource(
-    ref.watch(firestoreProvider),
-    ref.watch(firebaseStorageProvider),
-  );
+  return CheckinRemoteDataSource(ref.watch(firestoreProvider));
 }
 
 @Riverpod(keepAlive: true)

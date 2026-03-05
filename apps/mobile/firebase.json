@@ -13,6 +13,13 @@
           "projectId": "xperiments-dev",
           "appId": "1:506602598766:android:bc5d19f63df91bd359517f",
           "fileOutput": "android/app/google-services.json"
+        },
+        "buildConfigurations": {
+          ".": {
+            "projectId": "xperiments-dev",
+            "appId": "1:506602598766:android:bc5d19f63df91bd359517f",
+            "fileOutput": "android/app/google-services.json"
+          }
         }
       },
       "dart": {

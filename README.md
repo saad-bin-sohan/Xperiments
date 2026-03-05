@@ -34,7 +34,7 @@ Root `.firebaserc` maps aliases:
    - Email/Password
    - Google
 2. Create Firestore database (production mode).
-3. Create Firebase Storage bucket.
+3. (Optional) Create Firebase Storage bucket when you are ready to enable cloud photo uploads.
 4. Create Remote Config parameter:
    - `pass_fail_enabled` default `false`
 5. Register Android app with package `com.xperiments.app`.
@@ -139,7 +139,7 @@ npm run lint
 From repo root:
 
 ```bash
-firebase deploy --project dev --only hosting,functions,firestore,storage
+firebase deploy --project dev --only hosting,functions,firestore
 ```
 
 Deploy specific targets:
@@ -147,7 +147,7 @@ Deploy specific targets:
 ```bash
 firebase deploy --project dev --only hosting:admin
 firebase deploy --project dev --only functions
-firebase deploy --project dev --only firestore,storage
+firebase deploy --project dev --only firestore:rules,firestore:indexes
 ```
 
 ## Rules and indexes
