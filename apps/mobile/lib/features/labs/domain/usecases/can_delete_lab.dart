@@ -6,7 +6,10 @@ class CanDeleteLab {
 
   final LabsRepository _repository;
 
-  Future<LabDeletionCheck> call(String labId) {
-    return _repository.canDeleteLab(labId);
+  Future<LabDeletionCheck> call({
+    required String labId,
+    required String userId,
+  }) {
+    return _repository.canDeleteLab(labId: labId, userId: userId);
   }
 }

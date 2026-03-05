@@ -6,7 +6,7 @@ class WatchLabStats {
 
   final LabsRepository _repository;
 
-  Stream<LabStats> call(String labId) {
-    return _repository.watchLabStats(labId);
+  Stream<LabStats> call({required String labId, required String userId}) {
+    return _repository.watchLabStats(labId: labId, userId: userId);
   }
 }

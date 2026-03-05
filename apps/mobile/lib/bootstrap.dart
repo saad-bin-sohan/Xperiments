@@ -17,6 +17,8 @@ Future<void> bootstrap() async {
 
   // --- Debug diagnostics hooks ---
   if (kDebugMode) {
+    await DiagnosticLogger.instance.initialize();
+
     final originalOnError = FlutterError.onError;
     FlutterError.onError = (FlutterErrorDetails details) {
       DiagnosticLogger.instance.log(
@@ -36,10 +38,7 @@ Future<void> bootstrap() async {
 
   runZonedGuarded(
     () => runApp(
-      ProviderScope(
-        observers: observers,
-        child: const XperimentsApp(),
-      ),
+      ProviderScope(observers: observers, child: const XperimentsApp()),
     ),
     (Object error, StackTrace stackTrace) {
       if (kDebugMode) {

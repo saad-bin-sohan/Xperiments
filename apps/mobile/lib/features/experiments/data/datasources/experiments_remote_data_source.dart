@@ -85,8 +85,12 @@ class ExperimentsRemoteDataSource {
     }, SetOptions(merge: true));
   }
 
-  Stream<List<ExperimentModel>> watchLabExperiments(String labId) {
+  Stream<List<ExperimentModel>> watchLabExperiments({
+    required String labId,
+    required String userId,
+  }) {
     return _experimentsCollection
+        .where('userId', isEqualTo: userId)
         .where('labId', isEqualTo: labId)
         .where(
           'status',

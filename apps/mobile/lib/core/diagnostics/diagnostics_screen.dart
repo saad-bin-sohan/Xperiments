@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile/core/diagnostics/diagnostic_log.dart';
 import 'package:mobile/core/diagnostics/diagnostic_logger.dart';
+import 'package:share_plus/share_plus.dart';
 
 /// Full-screen log viewer available only in debug builds.
 class DiagnosticsScreen extends StatelessWidget {
@@ -26,9 +27,7 @@ class DiagnosticsScreen extends StatelessWidget {
             tooltip: 'Export logs',
           ),
           IconButton(
-            onPressed: () {
-              DiagnosticLogger.instance.clear();
-            },
+            onPressed: () => _clearLogs(context),
             icon: const Icon(Icons.delete_outline),
             tooltip: 'Clear logs',
           ),
@@ -79,31 +78,68 @@ class DiagnosticsScreen extends StatelessWidget {
   }
 
   Future<void> _copyLogs(BuildContext context) async {
-    final report = await DiagnosticLogger.instance.export();
-    await Clipboard.setData(ClipboardData(text: report));
+    try {
+      final report = await DiagnosticLogger.instance.export();
+      await Clipboard.setData(ClipboardData(text: report));
 
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Logs copied to clipboard')),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Logs copied to clipboard')),
+        );
+      }
+    } catch (error) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Failed to copy logs: $error')));
+      }
     }
   }
 
   Future<void> _shareLogs(BuildContext context) async {
-    final filePath = await DiagnosticLogger.instance.exportToFile();
-
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Logs exported to: $filePath'),
-          action: SnackBarAction(
-            label: 'Copy path',
-            onPressed: () {
-              Clipboard.setData(ClipboardData(text: filePath));
-            },
-          ),
+    try {
+      final file = await DiagnosticLogger.instance.getLogFileForExport();
+      final result = await SharePlus.instance.share(
+        ShareParams(
+          files: <XFile>[XFile(file.path)],
+          subject: 'Xperiments Diagnostic Logs',
+          text: 'Xperiments diagnostic logs export',
         ),
       );
+
+      if (context.mounted) {
+        final message = result.status == ShareResultStatus.dismissed
+            ? 'Export canceled'
+            : 'Share sheet opened';
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(message)));
+      }
+    } catch (error) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to export logs: $error')),
+        );
+      }
+    }
+  }
+
+  Future<void> _clearLogs(BuildContext context) async {
+    try {
+      await DiagnosticLogger.instance.clear();
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Diagnostics cleared')));
+      }
+    } catch (error) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Logs cleared in memory, file clear failed: $error'),
+          ),
+        );
+      }
     }
   }
 }

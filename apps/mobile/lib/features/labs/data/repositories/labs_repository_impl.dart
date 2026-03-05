@@ -64,13 +64,19 @@ class LabsRepositoryImpl implements LabsRepository {
   }
 
   @override
-  Future<LabDeletionCheck> canDeleteLab(String labId) {
-    return _remoteDataSource.canDeleteLab(labId);
+  Future<LabDeletionCheck> canDeleteLab({
+    required String labId,
+    required String userId,
+  }) {
+    return _remoteDataSource.canDeleteLab(labId: labId, userId: userId);
   }
 
   @override
-  Stream<LabStats> watchLabStats(String labId) {
-    return _remoteDataSource.watchLabStats(labId);
+  Stream<LabStats> watchLabStats({
+    required String labId,
+    required String userId,
+  }) {
+    return _remoteDataSource.watchLabStats(labId: labId, userId: userId);
   }
 
   Lab _toEntity(LabModel model) {

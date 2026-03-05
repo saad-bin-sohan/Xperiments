@@ -59,7 +59,9 @@ class LabsActionController extends _$LabsActionController {
     state = const AsyncLoading();
 
     final result = await AsyncValue.guard<LabDeletionCheck>(() async {
-      final check = await ref.read(canDeleteLabUseCaseProvider).call(labId);
+      final check = await ref
+          .read(canDeleteLabUseCaseProvider)
+          .call(labId: labId, userId: user.id);
       if (!check.canDelete) {
         return check;
       }

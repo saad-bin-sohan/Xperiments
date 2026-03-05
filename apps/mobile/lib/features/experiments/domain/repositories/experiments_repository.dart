@@ -11,7 +11,10 @@ abstract class ExperimentsRepository {
     required ExperimentDraft draft,
   });
 
-  Stream<List<Experiment>> watchLabExperiments(String labId);
+  Stream<List<Experiment>> watchLabExperiments({
+    required String labId,
+    required String userId,
+  });
 
   Stream<Experiment?> watchExperimentById(String experimentId);
 

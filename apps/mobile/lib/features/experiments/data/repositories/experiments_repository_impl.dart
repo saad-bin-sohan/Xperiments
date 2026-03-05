@@ -28,10 +28,15 @@ class ExperimentsRepositoryImpl implements ExperimentsRepository {
   }
 
   @override
-  Stream<List<Experiment>> watchLabExperiments(String labId) {
-    return _remoteDataSource.watchLabExperiments(labId).map((models) {
-      return models.map(_toEntity).toList();
-    });
+  Stream<List<Experiment>> watchLabExperiments({
+    required String labId,
+    required String userId,
+  }) {
+    return _remoteDataSource
+        .watchLabExperiments(labId: labId, userId: userId)
+        .map((models) {
+          return models.map(_toEntity).toList();
+        });
   }
 
   @override

@@ -6,7 +6,10 @@ class WatchLabExperiments {
 
   final ExperimentsRepository _repository;
 
-  Stream<List<Experiment>> call(String labId) {
-    return _repository.watchLabExperiments(labId);
+  Stream<List<Experiment>> call({
+    required String labId,
+    required String userId,
+  }) {
+    return _repository.watchLabExperiments(labId: labId, userId: userId);
   }
 }

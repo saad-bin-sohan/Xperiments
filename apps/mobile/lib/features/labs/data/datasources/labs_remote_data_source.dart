@@ -100,8 +100,13 @@ class LabsRemoteDataSource {
     });
   }
 
-  Future<LabDeletionCheck> canDeleteLab(String labId) async {
-    final query = _experimentsCollection.where('labId', isEqualTo: labId);
+  Future<LabDeletionCheck> canDeleteLab({
+    required String labId,
+    required String userId,
+  }) async {
+    final query = _experimentsCollection
+        .where('userId', isEqualTo: userId)
+        .where('labId', isEqualTo: labId);
 
     try {
       final aggregate = await query.count().get();
@@ -127,8 +132,12 @@ class LabsRemoteDataSource {
     return const LabDeletionCheck(canDelete: true);
   }
 
-  Stream<LabStats> watchLabStats(String labId) {
+  Stream<LabStats> watchLabStats({
+    required String labId,
+    required String userId,
+  }) {
     return _experimentsCollection
+        .where('userId', isEqualTo: userId)
         .where('labId', isEqualTo: labId)
         .snapshots()
         .map((snapshot) {

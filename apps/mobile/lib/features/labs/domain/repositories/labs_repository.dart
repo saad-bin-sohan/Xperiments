@@ -20,7 +20,13 @@ abstract class LabsRepository {
 
   Stream<Lab?> watchLabById(String labId);
 
-  Future<LabDeletionCheck> canDeleteLab(String labId);
+  Future<LabDeletionCheck> canDeleteLab({
+    required String labId,
+    required String userId,
+  });
 
-  Stream<LabStats> watchLabStats(String labId);
+  Stream<LabStats> watchLabStats({
+    required String labId,
+    required String userId,
+  });
 }

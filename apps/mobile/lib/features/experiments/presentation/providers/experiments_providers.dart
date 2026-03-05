@@ -103,7 +103,16 @@ ActiveExperimentsCount activeExperimentsCountUseCase(Ref ref) {
 
 @riverpod
 Stream<List<Experiment>> labExperiments(Ref ref, String labId) {
-  return ref.watch(watchLabExperimentsUseCaseProvider).call(labId);
+  final session = ref.watch(authSessionProvider).asData?.value;
+  final user = session?.user;
+
+  if (user == null) {
+    return Stream<List<Experiment>>.value(const <Experiment>[]);
+  }
+
+  return ref
+      .watch(watchLabExperimentsUseCaseProvider)
+      .call(labId: labId, userId: user.id);
 }
 
 @riverpod

@@ -87,10 +87,32 @@ Stream<Lab?> labById(Ref ref, String labId) {
 
 @riverpod
 Stream<LabStats> labStats(Ref ref, String labId) {
-  return ref.watch(watchLabStatsUseCaseProvider).call(labId);
+  final session = ref.watch(authSessionProvider).asData?.value;
+  final user = session?.user;
+
+  if (user == null) {
+    return Stream<LabStats>.value(
+      const LabStats(totalExperiments: 0, totalCompleted: 0),
+    );
+  }
+
+  return ref
+      .watch(watchLabStatsUseCaseProvider)
+      .call(labId: labId, userId: user.id);
 }
 
 @riverpod
 Future<LabDeletionCheck> labDeletionCheck(Ref ref, String labId) {
-  return ref.watch(canDeleteLabUseCaseProvider).call(labId);
+  final session = ref.watch(authSessionProvider).asData?.value;
+  final user = session?.user;
+
+  if (user == null) {
+    return Future<LabDeletionCheck>.value(
+      const LabDeletionCheck(canDelete: false, reason: 'Not signed in.'),
+    );
+  }
+
+  return ref
+      .watch(canDeleteLabUseCaseProvider)
+      .call(labId: labId, userId: user.id);
 }
