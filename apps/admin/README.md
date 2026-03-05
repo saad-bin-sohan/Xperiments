@@ -36,7 +36,6 @@ npm run build
 
 ```bash
 firebase deploy --project dev --only hosting:admin
-firebase deploy --project prod --only hosting:admin
 ```
 
 ## First admin account

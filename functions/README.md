@@ -47,7 +47,6 @@ From repo root (preferred):
 
 ```bash
 firebase deploy --project dev --only functions
-firebase deploy --project prod --only functions
 ```
 
 Or from `functions/`:

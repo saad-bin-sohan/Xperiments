@@ -68,8 +68,6 @@ dart run build_runner build --delete-conflicting-outputs
 
 ```bash
 flutter run --dart-define=FLAVOR=dev
-# or
-flutter run --dart-define=FLAVOR=prod
 ```
 
 ## Build Android release APK
@@ -142,7 +140,6 @@ From repo root:
 
 ```bash
 firebase deploy --project dev --only hosting,functions,firestore,storage
-firebase deploy --project prod --only hosting,functions,firestore,storage
 ```
 
 Deploy specific targets:

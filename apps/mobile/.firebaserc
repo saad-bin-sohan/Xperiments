@@ -1,6 +1,5 @@
 {
   "projects": {
-    "dev": "xperiments-dev",
-    "prod": "xperiments-prod"
+    "dev": "xperiments-dev"
   }
 }
