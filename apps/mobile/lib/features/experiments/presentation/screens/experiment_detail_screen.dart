@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/core/constants/app_sizes.dart';
 import 'package:mobile/core/routing/route_paths.dart';
 import 'package:mobile/core/utils/date_utils.dart';
+import 'package:mobile/core/utils/error_message_formatter.dart';
 import 'package:mobile/core/widgets/app_async_view.dart';
 import 'package:mobile/core/widgets/app_empty_state.dart';
 import 'package:mobile/features/experiments/domain/entities/experiment.dart';
@@ -45,9 +46,18 @@ class _ExperimentDetailScreenState
     ref.listen<AsyncValue<void>>(experimentActionControllerProvider, (_, next) {
       next.whenOrNull(
         error: (Object error, StackTrace _) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(error.toString())));
+          if (!mounted) {
+            return;
+          }
+          final messenger = ScaffoldMessenger.maybeOf(context);
+          if (messenger == null) {
+            return;
+          }
+          messenger.showSnackBar(
+            SnackBar(
+              content: Text(AppErrorMessageFormatter.forSnackBar(error)),
+            ),
+          );
         },
       );
     });
@@ -836,14 +846,17 @@ class _ExperimentDetailBody extends ConsumerWidget {
     required String hintText,
     required String confirmLabel,
   }) async {
-    final controller = TextEditingController();
+    var input = '';
     final value = await showDialog<String?>(
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
           title: Text(title),
-          content: TextField(
-            controller: controller,
+          content: TextFormField(
+            initialValue: input,
+            onChanged: (value) {
+              input = value;
+            },
             minLines: 3,
             maxLines: 6,
             decoration: InputDecoration(hintText: hintText),
@@ -854,15 +867,13 @@ class _ExperimentDetailBody extends ConsumerWidget {
               child: const Text('Cancel'),
             ),
             FilledButton(
-              onPressed: () =>
-                  Navigator.of(dialogContext).pop(controller.text.trim()),
+              onPressed: () => Navigator.of(dialogContext).pop(input.trim()),
               child: Text(confirmLabel),
             ),
           ],
         );
       },
     );
-    controller.dispose();
     return value;
   }
 
@@ -872,20 +883,23 @@ class _ExperimentDetailBody extends ConsumerWidget {
     required String hintText,
     required String confirmLabel,
   }) async {
-    final controller = TextEditingController();
+    var input = '';
     final value = await showDialog<String?>(
       context: context,
       builder: (dialogContext) {
         return StatefulBuilder(
           builder: (context, setDialogState) {
-            final hasText = controller.text.trim().isNotEmpty;
+            final hasText = input.trim().isNotEmpty;
             return AlertDialog(
               title: Text(title),
-              content: TextField(
-                controller: controller,
+              content: TextFormField(
+                initialValue: input,
                 minLines: 3,
                 maxLines: 6,
-                onChanged: (_) => setDialogState(() {}),
+                onChanged: (value) {
+                  input = value;
+                  setDialogState(() {});
+                },
                 decoration: InputDecoration(hintText: hintText),
               ),
               actions: <Widget>[
@@ -895,9 +909,7 @@ class _ExperimentDetailBody extends ConsumerWidget {
                 ),
                 FilledButton(
                   onPressed: hasText
-                      ? () => Navigator.of(
-                          dialogContext,
-                        ).pop(controller.text.trim())
+                      ? () => Navigator.of(dialogContext).pop(input.trim())
                       : null,
                   child: Text(confirmLabel),
                 ),
@@ -907,7 +919,6 @@ class _ExperimentDetailBody extends ConsumerWidget {
         );
       },
     );
-    controller.dispose();
     return value;
   }
 
@@ -945,14 +956,17 @@ class _ExperimentDetailBody extends ConsumerWidget {
     );
 
     if (confirm == true && context.mounted) {
-      final reflectionController = TextEditingController();
+      var reflectionText = '';
       final reflection = await showDialog<String?>(
         context: context,
         builder: (context) {
           return AlertDialog(
             title: const Text('Final reflection (optional)'),
-            content: TextField(
-              controller: reflectionController,
+            content: TextFormField(
+              initialValue: reflectionText,
+              onChanged: (value) {
+                reflectionText = value;
+              },
               minLines: 3,
               maxLines: 6,
               decoration: const InputDecoration(
@@ -967,7 +981,7 @@ class _ExperimentDetailBody extends ConsumerWidget {
               ),
               FilledButton(
                 onPressed: () =>
-                    Navigator.of(context).pop(reflectionController.text.trim()),
+                    Navigator.of(context).pop(reflectionText.trim()),
                 child: const Text('Save & End'),
               ),
             ],
@@ -975,7 +989,6 @@ class _ExperimentDetailBody extends ConsumerWidget {
         },
       );
 
-      reflectionController.dispose();
       await ref
           .read(experimentActionControllerProvider.notifier)
           .end(
@@ -988,14 +1001,17 @@ class _ExperimentDetailBody extends ConsumerWidget {
   }
 
   Future<void> _addSubtaskDialog(BuildContext context, WidgetRef ref) async {
-    final controller = TextEditingController();
+    var input = '';
     final created = await showDialog<String>(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: const Text('Add subtask'),
-          content: TextField(
-            controller: controller,
+          content: TextFormField(
+            initialValue: input,
+            onChanged: (value) {
+              input = value;
+            },
             decoration: const InputDecoration(labelText: 'Subtask name'),
           ),
           actions: <Widget>[
@@ -1004,16 +1020,13 @@ class _ExperimentDetailBody extends ConsumerWidget {
               child: const Text('Cancel'),
             ),
             FilledButton(
-              onPressed: () =>
-                  Navigator.of(context).pop(controller.text.trim()),
+              onPressed: () => Navigator.of(context).pop(input.trim()),
               child: const Text('Add'),
             ),
           ],
         );
       },
     );
-
-    controller.dispose();
 
     if (created == null || created.isEmpty) {
       return;
@@ -1036,14 +1049,17 @@ class _ExperimentDetailBody extends ConsumerWidget {
     WidgetRef ref,
     ExperimentSubtask target,
   ) async {
-    final controller = TextEditingController(text: target.name);
+    var input = target.name;
     final edited = await showDialog<String>(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: const Text('Edit subtask'),
-          content: TextField(
-            controller: controller,
+          content: TextFormField(
+            initialValue: input,
+            onChanged: (value) {
+              input = value;
+            },
             decoration: const InputDecoration(labelText: 'Subtask name'),
           ),
           actions: <Widget>[
@@ -1052,16 +1068,13 @@ class _ExperimentDetailBody extends ConsumerWidget {
               child: const Text('Cancel'),
             ),
             FilledButton(
-              onPressed: () =>
-                  Navigator.of(context).pop(controller.text.trim()),
+              onPressed: () => Navigator.of(context).pop(input.trim()),
               child: const Text('Save'),
             ),
           ],
         );
       },
     );
-
-    controller.dispose();
 
     if (edited == null || edited.isEmpty) {
       return;

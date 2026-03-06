@@ -21,7 +21,7 @@ class AuthController extends _$AuthController {
   }) async {
     state = const AsyncLoading();
 
-    state = await AsyncValue.guard(() async {
+    final nextState = await AsyncValue.guard(() async {
       final AuthUser user;
 
       if (isSignUp) {
@@ -38,16 +38,20 @@ class AuthController extends _$AuthController {
 
       await _postAuthBootstrap(user);
     });
+    if (!ref.mounted) return;
+    state = nextState;
   }
 
   Future<void> signInWithGoogle() async {
     state = const AsyncLoading();
 
-    state = await AsyncValue.guard(() async {
+    final nextState = await AsyncValue.guard(() async {
       final user = await ref.read(signInWithGoogleUseCaseProvider).call();
       if (!ref.mounted) return;
       await _postAuthBootstrap(user);
     });
+    if (!ref.mounted) return;
+    state = nextState;
   }
 
   Future<void> _postAuthBootstrap(AuthUser user) async {
@@ -63,6 +67,7 @@ class AuthController extends _$AuthController {
       throw const DisabledAccountException();
     }
 
+    if (!ref.mounted) return;
     await ref.read(ensureDefaultLabExistsUseCaseProvider).call(user.id);
   }
 }

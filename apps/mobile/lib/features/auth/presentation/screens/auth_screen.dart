@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/core/constants/app_sizes.dart';
 import 'package:mobile/core/constants/app_strings.dart';
+import 'package:mobile/core/utils/error_message_formatter.dart';
 import 'package:mobile/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:mobile/features/auth/presentation/widgets/auth_form.dart';
 
@@ -41,9 +42,18 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     ref.listen<AsyncValue<void>>(authControllerProvider, (_, next) {
       next.whenOrNull(
         error: (Object error, StackTrace stackTrace) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(error.toString())));
+          if (!mounted) {
+            return;
+          }
+          final messenger = ScaffoldMessenger.maybeOf(context);
+          if (messenger == null) {
+            return;
+          }
+          messenger.showSnackBar(
+            SnackBar(
+              content: Text(AppErrorMessageFormatter.forSnackBar(error)),
+            ),
+          );
         },
       );
     });

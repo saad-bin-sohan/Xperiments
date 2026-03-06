@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/core/constants/app_sizes.dart';
 import 'package:mobile/core/constants/app_strings.dart';
 import 'package:mobile/core/theme/theme_mode_controller.dart';
+import 'package:mobile/core/utils/error_message_formatter.dart';
 import 'package:mobile/core/widgets/app_async_view.dart';
 import 'package:mobile/core/widgets/app_empty_state.dart';
 import 'package:mobile/features/auth/presentation/providers/auth_providers.dart';
@@ -42,9 +43,18 @@ class _ProfileSettingsScreenState extends ConsumerState<ProfileSettingsScreen> {
     ref.listen<AsyncValue<void>>(profileControllerProvider, (_, next) {
       next.whenOrNull(
         error: (Object error, StackTrace stackTrace) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(error.toString())));
+          if (!mounted) {
+            return;
+          }
+          final messenger = ScaffoldMessenger.maybeOf(context);
+          if (messenger == null) {
+            return;
+          }
+          messenger.showSnackBar(
+            SnackBar(
+              content: Text(AppErrorMessageFormatter.forSnackBar(error)),
+            ),
+          );
         },
       );
     });
@@ -424,7 +434,7 @@ class _ProfileContent extends ConsumerWidget {
   }
 
   Future<bool> _confirmDeleteAccount(BuildContext context) async {
-    final TextEditingController confirmController = TextEditingController();
+    var confirmText = '';
 
     final confirmed = await showDialog<bool>(
       context: context,
@@ -436,8 +446,11 @@ class _ProfileContent extends ConsumerWidget {
             children: <Widget>[
               const Text(AppStrings.deleteAccountConfirmation),
               const SizedBox(height: AppSizes.spacingSm),
-              TextField(
-                controller: confirmController,
+              TextFormField(
+                initialValue: '',
+                onChanged: (value) {
+                  confirmText = value;
+                },
                 decoration: const InputDecoration(
                   labelText: 'Type DELETE to confirm',
                 ),
@@ -451,9 +464,7 @@ class _ProfileContent extends ConsumerWidget {
             ),
             FilledButton(
               onPressed: () {
-                Navigator.of(
-                  context,
-                ).pop(confirmController.text.trim() == 'DELETE');
+                Navigator.of(context).pop(confirmText.trim() == 'DELETE');
               },
               child: const Text('Delete'),
             ),
@@ -462,7 +473,6 @@ class _ProfileContent extends ConsumerWidget {
       },
     );
 
-    confirmController.dispose();
     return confirmed ?? false;
   }
 }

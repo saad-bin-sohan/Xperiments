@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/core/constants/app_sizes.dart';
 import 'package:mobile/core/utils/date_utils.dart';
+import 'package:mobile/core/utils/error_message_formatter.dart';
 import 'package:mobile/core/widgets/app_async_view.dart';
 import 'package:mobile/core/widgets/app_empty_state.dart';
 import 'package:mobile/features/journal/domain/entities/journal_entry.dart';
@@ -42,9 +43,18 @@ class _LabJournalSectionState extends ConsumerState<LabJournalSection> {
     ref.listen<AsyncValue<void>>(journalControllerProvider, (_, next) {
       next.whenOrNull(
         error: (Object error, StackTrace _) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(error.toString())));
+          if (!mounted) {
+            return;
+          }
+          final messenger = ScaffoldMessenger.maybeOf(context);
+          if (messenger == null) {
+            return;
+          }
+          messenger.showSnackBar(
+            SnackBar(
+              content: Text(AppErrorMessageFormatter.forSnackBar(error)),
+            ),
+          );
         },
       );
     });
@@ -176,10 +186,8 @@ class _LabJournalSectionState extends ConsumerState<LabJournalSection> {
     BuildContext context, {
     JournalEntry? existing,
   }) async {
-    final moodController = TextEditingController(
-      text: existing?.moodWords ?? '',
-    );
-    final bodyController = TextEditingController(text: existing?.body ?? '');
+    var moodWords = existing?.moodWords ?? '';
+    var bodyText = existing?.body ?? '';
     var selectedDate =
         existing?.date ?? AppDateUtils.startOfDay(DateTime.now());
 
@@ -232,16 +240,22 @@ class _LabJournalSectionState extends ConsumerState<LabJournalSection> {
                             }
                           },
                   ),
-                  TextField(
-                    controller: moodController,
+                  TextFormField(
+                    initialValue: moodWords,
+                    onChanged: (value) {
+                      moodWords = value;
+                    },
                     decoration: const InputDecoration(
                       labelText: 'Mood words (optional)',
                       hintText: 'focused, calm, tired',
                     ),
                   ),
                   const SizedBox(height: AppSizes.spacingSm),
-                  TextField(
-                    controller: bodyController,
+                  TextFormField(
+                    initialValue: bodyText,
+                    onChanged: (value) {
+                      bodyText = value;
+                    },
                     minLines: 4,
                     maxLines: 10,
                     decoration: const InputDecoration(labelText: 'Entry'),
@@ -254,7 +268,7 @@ class _LabJournalSectionState extends ConsumerState<LabJournalSection> {
                           ? null
                           : () async {
                               final navigator = Navigator.of(sheetContext);
-                              final body = bodyController.text.trim();
+                              final body = bodyText.trim();
                               if (body.isEmpty) {
                                 return;
                               }
@@ -265,7 +279,7 @@ class _LabJournalSectionState extends ConsumerState<LabJournalSection> {
                                     labId: widget.labId,
                                     entryId: existing?.id,
                                     date: selectedDate,
-                                    moodWords: moodController.text.trim(),
+                                    moodWords: moodWords.trim(),
                                     body: body,
                                   );
 
@@ -290,9 +304,6 @@ class _LabJournalSectionState extends ConsumerState<LabJournalSection> {
         );
       },
     );
-
-    moodController.dispose();
-    bodyController.dispose();
   }
 
   Future<void> _deleteEntry(BuildContext context, JournalEntry entry) async {
