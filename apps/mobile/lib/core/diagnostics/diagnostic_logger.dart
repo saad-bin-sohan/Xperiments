@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:mobile/core/diagnostics/diagnostic_log.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -91,7 +92,11 @@ class DiagnosticLogger extends ChangeNotifier {
     // Also print to console for convenience.
     debugPrint('[DIAG] ${entry.format()}');
 
-    notifyListeners();
+    // Defer UI notification to avoid setState-during-frame errors when
+    // log() is called from FlutterError.onError during a paint frame.
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 
   /// Convenient shorthand for [LogLevel.error].

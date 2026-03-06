@@ -10,36 +10,40 @@ import 'package:mobile/core/diagnostics/diagnostic_logger.dart';
 import 'package:mobile/core/firebase/firebase_initializer.dart';
 import 'package:mobile/core/notifications/firebase_messaging_background_handler.dart';
 
-Future<void> bootstrap() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  await FirebaseInitializer.initialize();
-
-  // --- Debug diagnostics hooks ---
-  if (kDebugMode) {
-    await DiagnosticLogger.instance.initialize();
-
-    final originalOnError = FlutterError.onError;
-    FlutterError.onError = (FlutterErrorDetails details) {
-      DiagnosticLogger.instance.log(
-        LogLevel.error,
-        'Flutter',
-        details.exceptionAsString(),
-        details.stack,
-      );
-      // Forward to the original handler so assertions still fire.
-      originalOnError?.call(details);
-    };
-  }
-
-  final List<ProviderObserver> observers = <ProviderObserver>[
-    if (kDebugMode) _DiagnosticProviderObserver(),
-  ];
-
+Future<void> bootstrap() {
+  final completer = Completer<void>();
   runZonedGuarded(
-    () => runApp(
-      ProviderScope(observers: observers, child: const XperimentsApp()),
-    ),
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+      await FirebaseInitializer.initialize();
+
+      // --- Debug diagnostics hooks ---
+      if (kDebugMode) {
+        await DiagnosticLogger.instance.initialize();
+
+        final originalOnError = FlutterError.onError;
+        FlutterError.onError = (FlutterErrorDetails details) {
+          DiagnosticLogger.instance.log(
+            LogLevel.error,
+            'Flutter',
+            details.exceptionAsString(),
+            details.stack,
+          );
+          // Forward to the original handler so assertions still fire.
+          originalOnError?.call(details);
+        };
+      }
+
+      final List<ProviderObserver> observers = <ProviderObserver>[
+        if (kDebugMode) _DiagnosticProviderObserver(),
+      ];
+
+      runApp(
+        ProviderScope(observers: observers, child: const XperimentsApp()),
+      );
+      completer.complete();
+    },
     (Object error, StackTrace stackTrace) {
       if (kDebugMode) {
         DiagnosticLogger.instance.log(
@@ -57,8 +61,10 @@ Future<void> bootstrap() async {
           library: 'bootstrap',
         ),
       );
+      if (!completer.isCompleted) completer.completeError(error, stackTrace);
     },
   );
+  return completer.future;
 }
 
 /// Riverpod observer that captures provider errors into the diagnostic log.

@@ -5,6 +5,8 @@ class HomeWidgetDataSource {
   const HomeWidgetDataSource();
 
   static const String providerName = 'TodayChecklistWidgetProvider';
+  static const String androidProviderName =
+      'com.xperiments.app.widget.TodayChecklistWidgetProvider';
   static const int maxRows = 5;
 
   Future<void> updateTodayChecklist(List<WidgetChecklistItem> items) async {
@@ -50,7 +52,7 @@ class HomeWidgetDataSource {
 
     await HomeWidget.updateWidget(
       name: providerName,
-      androidName: providerName,
+      androidName: androidProviderName,
     );
   }
 
