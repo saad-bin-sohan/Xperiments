@@ -250,6 +250,48 @@ final class SaveLessonsLearnedUseCaseProvider
 String _$saveLessonsLearnedUseCaseHash() =>
     r'178549c03231344b59da36553bc5dd1be397a1a7';
 
+@ProviderFor(saveDebriefUseCase)
+const saveDebriefUseCaseProvider = SaveDebriefUseCaseProvider._();
+
+final class SaveDebriefUseCaseProvider
+    extends $FunctionalProvider<SaveDebrief, SaveDebrief, SaveDebrief>
+    with $Provider<SaveDebrief> {
+  const SaveDebriefUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'saveDebriefUseCaseProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$saveDebriefUseCaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<SaveDebrief> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  SaveDebrief create(Ref ref) {
+    return saveDebriefUseCase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SaveDebrief value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SaveDebrief>(value),
+    );
+  }
+}
+
+String _$saveDebriefUseCaseHash() =>
+    r'377ec3f4b7fe5b2545e019f2fca5545af50c0740';
+
 @ProviderFor(searchHistoryContentUseCase)
 const searchHistoryContentUseCaseProvider =
     SearchHistoryContentUseCaseProvider._();

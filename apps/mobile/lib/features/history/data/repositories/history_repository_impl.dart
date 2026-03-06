@@ -25,6 +25,21 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
+  Future<void> saveDebrief({
+    required String experimentId,
+    int? regretScore,
+    int? surpriseScore,
+    bool? wouldRepeat,
+  }) {
+    return _remoteDataSource.saveDebrief(
+      experimentId: experimentId,
+      regretScore: regretScore,
+      surpriseScore: surpriseScore,
+      wouldRepeat: wouldRepeat,
+    );
+  }
+
+  @override
   Future<List<HistorySearchResult>> searchHistoryContent(
     String userId,
     String query,

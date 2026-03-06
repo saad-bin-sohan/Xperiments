@@ -5,6 +5,7 @@ part 'experiment.freezed.dart';
 enum ExperimentStatus {
   active,
   paused,
+  awaitingOutcome,
   completed,
   endedEarly;
 
@@ -14,6 +15,8 @@ enum ExperimentStatus {
         return 'active';
       case ExperimentStatus.paused:
         return 'paused';
+      case ExperimentStatus.awaitingOutcome:
+        return 'awaiting_outcome';
       case ExperimentStatus.completed:
         return 'completed';
       case ExperimentStatus.endedEarly:
@@ -27,6 +30,8 @@ enum ExperimentStatus {
         return 'Active';
       case ExperimentStatus.paused:
         return 'Paused';
+      case ExperimentStatus.awaitingOutcome:
+        return 'Awaiting Outcome';
       case ExperimentStatus.completed:
         return 'Completed';
       case ExperimentStatus.endedEarly:
@@ -38,6 +43,8 @@ enum ExperimentStatus {
     switch (value) {
       case 'paused':
         return ExperimentStatus.paused;
+      case 'awaiting_outcome':
+        return ExperimentStatus.awaitingOutcome;
       case 'completed':
         return ExperimentStatus.completed;
       case 'ended_early':
@@ -48,6 +55,8 @@ enum ExperimentStatus {
     }
   }
 }
+
+enum ExpiredResolution { done, notDone, reschedule }
 
 enum ExperimentFrequency {
   daily,
@@ -209,6 +218,11 @@ abstract class Experiment with _$Experiment {
     DateTime? completedAt,
     String? finalReflection,
     String? lessonsLearned,
+    String? skipReason,
+    @Default(0) int rescheduleCount,
+    int? regretScore,
+    int? surpriseScore,
+    bool? wouldRepeat,
     @Default(<ExperimentSubtask>[]) List<ExperimentSubtask> subtasks,
     @Default(<PauseWindow>[]) List<PauseWindow> pauseHistory,
   }) = _Experiment;

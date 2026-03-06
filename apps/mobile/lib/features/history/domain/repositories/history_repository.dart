@@ -9,6 +9,13 @@ abstract class HistoryRepository {
 
   Future<void> saveLessonsLearned(String experimentId, String? lessons);
 
+  Future<void> saveDebrief({
+    required String experimentId,
+    int? regretScore,
+    int? surpriseScore,
+    bool? wouldRepeat,
+  });
+
   Future<List<HistorySearchResult>> searchHistoryContent(
     String userId,
     String query,

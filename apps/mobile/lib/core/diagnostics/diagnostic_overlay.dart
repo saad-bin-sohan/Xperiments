@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/core/diagnostics/diagnostic_log.dart';
 import 'package:mobile/core/diagnostics/diagnostic_logger.dart';
 import 'package:mobile/core/diagnostics/diagnostics_screen.dart';
+import 'package:mobile/core/routing/app_router.dart';
 
 /// Injects a small floating debug button in the bottom-right corner of the
 /// screen. Only renders in debug builds.
@@ -29,11 +30,7 @@ class DiagnosticOverlay extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           child,
-          Positioned(
-            right: 12,
-            bottom: 100,
-            child: _DebugFab(),
-          ),
+          Positioned(right: 12, bottom: 100, child: _DebugFab()),
         ],
       ),
     );
@@ -41,6 +38,18 @@ class DiagnosticOverlay extends StatelessWidget {
 }
 
 class _DebugFab extends StatelessWidget {
+  Future<void> _openDiagnostics() async {
+    final navigator = rootNavigatorKey.currentState;
+    if (navigator == null) {
+      debugPrint('[DIAG] Root navigator unavailable; diagnostics not opened.');
+      return;
+    }
+
+    await navigator.push(
+      MaterialPageRoute<void>(builder: (_) => const DiagnosticsScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
@@ -58,15 +67,10 @@ class _DebugFab extends StatelessWidget {
           child: FloatingActionButton(
             heroTag: '__diagnostic_fab__',
             mini: true,
-            backgroundColor:
-                hasErrors ? Colors.red.shade700 : Colors.grey.shade800,
-            onPressed: () {
-              Navigator.of(context, rootNavigator: true).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => const DiagnosticsScreen(),
-                ),
-              );
-            },
+            backgroundColor: hasErrors
+                ? Colors.red.shade700
+                : Colors.grey.shade800,
+            onPressed: _openDiagnostics,
             child: Badge(
               isLabelVisible: count > 0,
               label: Text(

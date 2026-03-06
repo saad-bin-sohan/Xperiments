@@ -46,5 +46,13 @@ abstract class ExperimentsRepository {
 
   Future<void> syncExpiredExperiments(String userId, DateTime now);
 
+  Future<void> resolveExpiredExperiment({
+    required String experimentId,
+    required ExpiredResolution resolution,
+    String? finalReflection,
+    String? skipReason,
+    DateTime? newEndDate,
+  });
+
   Future<int> activeExperimentsCount(String userId);
 }

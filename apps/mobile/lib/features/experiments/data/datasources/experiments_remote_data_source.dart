@@ -97,6 +97,7 @@ class ExperimentsRemoteDataSource {
           whereIn: <String>[
             ExperimentStatus.active.value,
             ExperimentStatus.paused.value,
+            ExperimentStatus.awaitingOutcome.value,
           ],
         )
         .orderBy('createdAt', descending: true)
@@ -440,12 +441,70 @@ class ExperimentsRemoteDataSource {
     final batch = _firestore.batch();
     for (final doc in snapshot.docs) {
       batch.update(doc.reference, <String, dynamic>{
-        'status': ExperimentStatus.completed.value,
-        'completedAt': now,
+        'status': ExperimentStatus.awaitingOutcome.value,
       });
     }
 
     await batch.commit();
+  }
+
+  Future<void> resolveExpiredExperiment({
+    required String experimentId,
+    required ExpiredResolution resolution,
+    DateTime? now,
+    String? finalReflection,
+    String? skipReason,
+    DateTime? newEndDate,
+  }) async {
+    final effective = now ?? DateTime.now();
+    final snapshot = await _experimentsCollection.doc(experimentId).get();
+    if (!snapshot.exists) {
+      return;
+    }
+
+    final model = ExperimentModel.fromDoc(snapshot);
+    if (model.status != ExperimentStatus.awaitingOutcome) {
+      return;
+    }
+
+    switch (resolution) {
+      case ExpiredResolution.done:
+        final nowDay = AppDateUtils.startOfDay(effective);
+        final endDay = model.endDate == null
+            ? null
+            : AppDateUtils.startOfDay(model.endDate!);
+        final newStatus = model.isOpenEnded
+            ? ExperimentStatus.completed
+            : (endDay != null && nowDay.isBefore(endDay)
+                  ? ExperimentStatus.endedEarly
+                  : ExperimentStatus.completed);
+        await snapshot.reference.update(<String, dynamic>{
+          'status': newStatus.value,
+          'completedAt': effective,
+          'finalReflection': _nullable(finalReflection),
+        });
+        return;
+      case ExpiredResolution.notDone:
+        await snapshot.reference.update(<String, dynamic>{
+          'status': ExperimentStatus.endedEarly.value,
+          'completedAt': effective,
+          'skipReason': _nullable(skipReason),
+        });
+        return;
+      case ExpiredResolution.reschedule:
+        assert(newEndDate != null, 'newEndDate required for reschedule');
+        if (newEndDate == null) {
+          return;
+        }
+        await snapshot.reference.update(<String, dynamic>{
+          'status': ExperimentStatus.active.value,
+          'endDate': newEndDate,
+          'rescheduleCount': model.rescheduleCount + 1,
+          if (skipReason != null && skipReason.isNotEmpty)
+            'skipReason': skipReason,
+        });
+        return;
+    }
   }
 
   Future<int> activeExperimentsCount(String userId) async {
@@ -456,6 +515,7 @@ class ExperimentsRemoteDataSource {
           whereIn: <String>[
             ExperimentStatus.active.value,
             ExperimentStatus.paused.value,
+            ExperimentStatus.awaitingOutcome.value,
           ],
         );
 

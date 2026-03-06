@@ -65,4 +65,27 @@ class ExperimentActionController extends _$ExperimentActionController {
           .call(experimentId, subtasks);
     });
   }
+
+  Future<void> resolveExpired({
+    required String experimentId,
+    required ExpiredResolution resolution,
+    String? finalReflection,
+    String? skipReason,
+    DateTime? newEndDate,
+  }) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref
+          .read(resolveExpiredExperimentUseCaseProvider)
+          .call(
+            experimentId: experimentId,
+            resolution: resolution,
+            finalReflection: finalReflection,
+            skipReason: skipReason,
+            newEndDate: newEndDate,
+          );
+      ref.invalidate(experimentByIdProvider(experimentId));
+      ref.invalidate(experimentAnalyticsProvider(experimentId));
+    });
+  }
 }

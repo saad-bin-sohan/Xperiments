@@ -27,6 +27,11 @@ class ExperimentModel {
     this.completedAt,
     this.finalReflection,
     this.lessonsLearned,
+    this.skipReason,
+    required this.rescheduleCount,
+    this.regretScore,
+    this.surpriseScore,
+    this.wouldRepeat,
     required this.subtasks,
     required this.pauseHistory,
   });
@@ -55,6 +60,11 @@ class ExperimentModel {
   final DateTime? completedAt;
   final String? finalReflection;
   final String? lessonsLearned;
+  final String? skipReason;
+  final int rescheduleCount;
+  final int? regretScore;
+  final int? surpriseScore;
+  final bool? wouldRepeat;
   final List<ExperimentSubtask> subtasks;
   final List<PauseWindow> pauseHistory;
 
@@ -90,6 +100,11 @@ class ExperimentModel {
       completedAt: _readDate(data['completedAt']),
       finalReflection: data['finalReflection'] as String?,
       lessonsLearned: data['lessonsLearned'] as String?,
+      skipReason: data['skipReason'] as String?,
+      rescheduleCount: (data['rescheduleCount'] as num?)?.toInt() ?? 0,
+      regretScore: (data['regretScore'] as num?)?.toInt(),
+      surpriseScore: (data['surpriseScore'] as num?)?.toInt(),
+      wouldRepeat: data['wouldRepeat'] as bool?,
       subtasks: _readSubtasks(data['subtasks']),
       pauseHistory: _readPauseHistory(data['pauseHistory']),
     );
@@ -174,6 +189,11 @@ extension ExperimentModelX on ExperimentModel {
       completedAt: completedAt,
       finalReflection: finalReflection,
       lessonsLearned: lessonsLearned,
+      skipReason: skipReason,
+      rescheduleCount: rescheduleCount,
+      regretScore: regretScore,
+      surpriseScore: surpriseScore,
+      wouldRepeat: wouldRepeat,
       subtasks: subtasks,
       pauseHistory: pauseHistory,
     );

@@ -662,6 +662,55 @@ final class SyncExpiredExperimentsUseCaseProvider
 String _$syncExpiredExperimentsUseCaseHash() =>
     r'dd4bd6e21bf541acf77fd902201d610ae55ea35e';
 
+@ProviderFor(resolveExpiredExperimentUseCase)
+const resolveExpiredExperimentUseCaseProvider =
+    ResolveExpiredExperimentUseCaseProvider._();
+
+final class ResolveExpiredExperimentUseCaseProvider
+    extends
+        $FunctionalProvider<
+          ResolveExpiredExperiment,
+          ResolveExpiredExperiment,
+          ResolveExpiredExperiment
+        >
+    with $Provider<ResolveExpiredExperiment> {
+  const ResolveExpiredExperimentUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'resolveExpiredExperimentUseCaseProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$resolveExpiredExperimentUseCaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<ResolveExpiredExperiment> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ResolveExpiredExperiment create(Ref ref) {
+    return resolveExpiredExperimentUseCase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ResolveExpiredExperiment value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ResolveExpiredExperiment>(value),
+    );
+  }
+}
+
+String _$resolveExpiredExperimentUseCaseHash() =>
+    r'c2de188ff740e126298f387a2d8ad789a6de0e65';
+
 @ProviderFor(activeExperimentsCountUseCase)
 const activeExperimentsCountUseCaseProvider =
     ActiveExperimentsCountUseCaseProvider._();
@@ -766,7 +815,7 @@ final class LabExperimentsProvider
   }
 }
 
-String _$labExperimentsHash() => r'a4d96f0a2f625ca6c0d27c22a017be74430ac27b';
+String _$labExperimentsHash() => r'dec94f60f1480f5f751aa93bfb88a1601df77ab9';
 
 final class LabExperimentsFamily extends $Family
     with $FunctionalFamilyOverride<Stream<List<Experiment>>, String> {

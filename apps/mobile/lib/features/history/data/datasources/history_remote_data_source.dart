@@ -117,6 +117,28 @@ class HistoryRemoteDataSource {
     }, SetOptions(merge: true));
   }
 
+  Future<void> saveDebrief({
+    required String experimentId,
+    int? regretScore,
+    int? surpriseScore,
+    bool? wouldRepeat,
+  }) {
+    final data = <String, dynamic>{};
+    if (regretScore != null) {
+      data['regretScore'] = regretScore;
+    }
+    if (surpriseScore != null) {
+      data['surpriseScore'] = surpriseScore;
+    }
+    if (wouldRepeat != null) {
+      data['wouldRepeat'] = wouldRepeat;
+    }
+    return _experimentsCollection.doc(experimentId).set(
+      data,
+      SetOptions(merge: true),
+    );
+  }
+
   Future<List<HistorySearchResult>> searchHistoryContent(
     String userId,
     String query,

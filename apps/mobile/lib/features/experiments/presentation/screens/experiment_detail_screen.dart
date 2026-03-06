@@ -29,6 +29,7 @@ class _ExperimentDetailScreenState
   final _uuid = const Uuid();
   DateTime _focusedDay = AppDateUtils.startOfDay(DateTime.now());
   DateTime? _selectedDay;
+  bool _resolutionSheetShown = false;
 
   @override
   void initState() {
@@ -67,10 +68,18 @@ class _ExperimentDetailScreenState
           );
         }
 
+        if (experiment.status != ExperimentStatus.awaitingOutcome) {
+          _resolutionSheetShown = false;
+        }
+
         return _ExperimentDetailBody(
           experiment: experiment,
           focusedDay: _focusedDay,
           selectedDay: _selectedDay,
+          resolutionSheetShown: _resolutionSheetShown,
+          onResolutionSheetShown: () {
+            _resolutionSheetShown = true;
+          },
           onDaySelected: (selected, focused) {
             setState(() {
               _selectedDay = selected;
@@ -92,6 +101,8 @@ class _ExperimentDetailBody extends ConsumerWidget {
     required this.experiment,
     required this.focusedDay,
     required this.selectedDay,
+    required this.resolutionSheetShown,
+    required this.onResolutionSheetShown,
     required this.onDaySelected,
     required this.onFocusedDayChanged,
     required this.createId,
@@ -100,6 +111,8 @@ class _ExperimentDetailBody extends ConsumerWidget {
   final Experiment experiment;
   final DateTime focusedDay;
   final DateTime? selectedDay;
+  final bool resolutionSheetShown;
+  final VoidCallback onResolutionSheetShown;
   final void Function(DateTime selected, DateTime focused) onDaySelected;
   final void Function(DateTime focused) onFocusedDayChanged;
   final String Function() createId;
@@ -112,6 +125,17 @@ class _ExperimentDetailBody extends ConsumerWidget {
     final labAsync = ref.watch(labByIdProvider(experiment.labId));
     final actionBusy = ref.watch(experimentActionControllerProvider).isLoading;
     final passFailVisible = ref.watch(passFailFeatureVisibleProvider);
+
+    if (experiment.status == ExperimentStatus.awaitingOutcome &&
+        !resolutionSheetShown) {
+      onResolutionSheetShown();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!context.mounted) {
+          return;
+        }
+        _showResolutionSheet(context, ref);
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(experiment.name)),
@@ -654,6 +678,245 @@ class _ExperimentDetailBody extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _showResolutionSheet(BuildContext context, WidgetRef ref) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      isDismissible: false,
+      enableDrag: false,
+      builder: (sheetContext) {
+        return PopScope(
+          canPop: false,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(AppSizes.spacingMd),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    '⏰  Time\'s Up',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: AppSizes.spacingXs),
+                  Text('"${experiment.name}" has expired.'),
+                  const SizedBox(height: AppSizes.spacingXs),
+                  const Text('What actually happened?'),
+                  const SizedBox(height: AppSizes.spacingMd),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: () async {
+                        final reflection = await _showOptionalTextDialog(
+                          context: context,
+                          title: 'Final reflection (optional)',
+                          hintText: 'Final reflection — what did you learn?',
+                          confirmLabel: 'Confirm',
+                        );
+                        if (reflection == null || !sheetContext.mounted) {
+                          return;
+                        }
+                        await _resolveExpiredFromSheet(
+                          sheetContext: sheetContext,
+                          ref: ref,
+                          resolution: ExpiredResolution.done,
+                          finalReflection: _nullableInput(reflection),
+                        );
+                      },
+                      child: const Text('✓  I Did It'),
+                    ),
+                  ),
+                  const SizedBox(height: AppSizes.spacingSm),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      onPressed: () async {
+                        final reason = await _showOptionalTextDialog(
+                          context: context,
+                          title: "I Didn't Do It",
+                          hintText:
+                              "What stopped you? You don't have to answer.",
+                          confirmLabel: 'Confirm',
+                        );
+                        if (reason == null || !sheetContext.mounted) {
+                          return;
+                        }
+                        await _resolveExpiredFromSheet(
+                          sheetContext: sheetContext,
+                          ref: ref,
+                          resolution: ExpiredResolution.notDone,
+                          skipReason: _nullableInput(reason),
+                        );
+                      },
+                      child: const Text("✗  I Didn't Do It"),
+                    ),
+                  ),
+                  const SizedBox(height: AppSizes.spacingSm),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                      onPressed: () async {
+                        String? skipReason;
+                        if (experiment.rescheduleCount >= 1) {
+                          skipReason = await _showRequiredTextDialog(
+                            context: context,
+                            title:
+                                "You've already rescheduled this once. What's different this time?",
+                            hintText: 'Tell yourself what has changed',
+                            confirmLabel: 'Continue',
+                          );
+                          if (skipReason == null || !sheetContext.mounted) {
+                            return;
+                          }
+                        }
+
+                        final tomorrow = AppDateUtils.startOfDay(
+                          DateTime.now().add(const Duration(days: 1)),
+                        );
+                        final pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: tomorrow,
+                          firstDate: tomorrow,
+                          lastDate: tomorrow.add(const Duration(days: 3650)),
+                        );
+                        if (pickedDate == null || !sheetContext.mounted) {
+                          return;
+                        }
+
+                        await _resolveExpiredFromSheet(
+                          sheetContext: sheetContext,
+                          ref: ref,
+                          resolution: ExpiredResolution.reschedule,
+                          skipReason: skipReason,
+                          newEndDate: AppDateUtils.startOfDay(pickedDate),
+                        );
+                      },
+                      child: const Text('↻  Reschedule'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _resolveExpiredFromSheet({
+    required BuildContext sheetContext,
+    required WidgetRef ref,
+    required ExpiredResolution resolution,
+    String? finalReflection,
+    String? skipReason,
+    DateTime? newEndDate,
+  }) async {
+    await ref
+        .read(experimentActionControllerProvider.notifier)
+        .resolveExpired(
+          experimentId: experiment.id,
+          resolution: resolution,
+          finalReflection: finalReflection,
+          skipReason: skipReason,
+          newEndDate: newEndDate,
+        );
+    final actionState = ref.read(experimentActionControllerProvider);
+    if (actionState.hasError) {
+      return;
+    }
+    if (sheetContext.mounted) {
+      Navigator.of(sheetContext).pop();
+    }
+  }
+
+  Future<String?> _showOptionalTextDialog({
+    required BuildContext context,
+    required String title,
+    required String hintText,
+    required String confirmLabel,
+  }) async {
+    final controller = TextEditingController();
+    final value = await showDialog<String?>(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: Text(title),
+          content: TextField(
+            controller: controller,
+            minLines: 3,
+            maxLines: 6,
+            decoration: InputDecoration(hintText: hintText),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('Cancel'),
+            ),
+            FilledButton(
+              onPressed: () =>
+                  Navigator.of(dialogContext).pop(controller.text.trim()),
+              child: Text(confirmLabel),
+            ),
+          ],
+        );
+      },
+    );
+    controller.dispose();
+    return value;
+  }
+
+  Future<String?> _showRequiredTextDialog({
+    required BuildContext context,
+    required String title,
+    required String hintText,
+    required String confirmLabel,
+  }) async {
+    final controller = TextEditingController();
+    final value = await showDialog<String?>(
+      context: context,
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            final hasText = controller.text.trim().isNotEmpty;
+            return AlertDialog(
+              title: Text(title),
+              content: TextField(
+                controller: controller,
+                minLines: 3,
+                maxLines: 6,
+                onChanged: (_) => setDialogState(() {}),
+                decoration: InputDecoration(hintText: hintText),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                  child: const Text('Cancel'),
+                ),
+                FilledButton(
+                  onPressed: hasText
+                      ? () => Navigator.of(
+                          dialogContext,
+                        ).pop(controller.text.trim())
+                      : null,
+                  child: Text(confirmLabel),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+    controller.dispose();
+    return value;
+  }
+
+  String? _nullableInput(String value) {
+    final trimmed = value.trim();
+    if (trimmed.isEmpty) {
+      return null;
+    }
+    return trimmed;
   }
 
   Future<void> _confirmEndExperiment(

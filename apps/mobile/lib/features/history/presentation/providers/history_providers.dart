@@ -8,6 +8,7 @@ import 'package:mobile/features/history/domain/entities/summary_text_result.dart
 import 'package:mobile/features/history/domain/repositories/history_repository.dart';
 import 'package:mobile/features/history/domain/usecases/build_monthly_summary.dart';
 import 'package:mobile/features/history/domain/usecases/build_yearly_summary.dart';
+import 'package:mobile/features/history/domain/usecases/save_debrief.dart';
 import 'package:mobile/features/history/domain/usecases/save_final_reflection.dart';
 import 'package:mobile/features/history/domain/usecases/save_lessons_learned.dart';
 import 'package:mobile/features/history/domain/usecases/search_history_content.dart';
@@ -39,6 +40,11 @@ SaveFinalReflection saveFinalReflectionUseCase(Ref ref) {
 @Riverpod(keepAlive: true)
 SaveLessonsLearned saveLessonsLearnedUseCase(Ref ref) {
   return SaveLessonsLearned(ref.watch(historyRepositoryProvider));
+}
+
+@Riverpod(keepAlive: true)
+SaveDebrief saveDebriefUseCase(Ref ref) {
+  return SaveDebrief(ref.watch(historyRepositoryProvider));
 }
 
 @Riverpod(keepAlive: true)

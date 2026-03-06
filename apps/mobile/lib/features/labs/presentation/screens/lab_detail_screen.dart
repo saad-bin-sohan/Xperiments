@@ -159,8 +159,24 @@ class _LabDetailBody extends ConsumerWidget {
                     margin: const EdgeInsets.only(bottom: AppSizes.spacingSm),
                     child: ListTile(
                       title: Text(experiment.name),
-                      subtitle: Text(experiment.status.label),
-                      trailing: const Icon(Icons.chevron_right),
+                      subtitle: Text(
+                        experiment.status.label,
+                        style:
+                            experiment.status ==
+                                ExperimentStatus.awaitingOutcome
+                            ? TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                                fontWeight: FontWeight.w600,
+                              )
+                            : null,
+                      ),
+                      trailing:
+                          experiment.status == ExperimentStatus.awaitingOutcome
+                          ? Icon(
+                              Icons.warning_amber_rounded,
+                              color: Theme.of(context).colorScheme.error,
+                            )
+                          : const Icon(Icons.chevron_right),
                       onTap: () {
                         context.push(
                           RoutePaths.experimentDetail(experiment.id),

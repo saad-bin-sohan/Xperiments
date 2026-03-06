@@ -109,6 +109,23 @@ class ExperimentsRepositoryImpl implements ExperimentsRepository {
   }
 
   @override
+  Future<void> resolveExpiredExperiment({
+    required String experimentId,
+    required ExpiredResolution resolution,
+    String? finalReflection,
+    String? skipReason,
+    DateTime? newEndDate,
+  }) {
+    return _remoteDataSource.resolveExpiredExperiment(
+      experimentId: experimentId,
+      resolution: resolution,
+      finalReflection: finalReflection,
+      skipReason: skipReason,
+      newEndDate: newEndDate,
+    );
+  }
+
+  @override
   Future<int> activeExperimentsCount(String userId) {
     return _remoteDataSource.activeExperimentsCount(userId);
   }

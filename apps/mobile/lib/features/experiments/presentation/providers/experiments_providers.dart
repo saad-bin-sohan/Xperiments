@@ -12,6 +12,7 @@ import 'package:mobile/features/experiments/domain/usecases/create_experiment.da
 import 'package:mobile/features/experiments/domain/usecases/end_experiment.dart';
 import 'package:mobile/features/experiments/domain/usecases/pause_experiment.dart';
 import 'package:mobile/features/experiments/domain/usecases/replace_subtasks.dart';
+import 'package:mobile/features/experiments/domain/usecases/resolve_expired_experiment.dart';
 import 'package:mobile/features/experiments/domain/usecases/resume_experiment.dart';
 import 'package:mobile/features/experiments/domain/usecases/set_pass_fail.dart';
 import 'package:mobile/features/experiments/domain/usecases/sync_expired_experiments.dart';
@@ -94,6 +95,11 @@ ComputeExperimentAnalytics computeExperimentAnalyticsUseCase(Ref ref) {
 @Riverpod(keepAlive: true)
 SyncExpiredExperiments syncExpiredExperimentsUseCase(Ref ref) {
   return SyncExpiredExperiments(ref.watch(experimentsRepositoryProvider));
+}
+
+@Riverpod(keepAlive: true)
+ResolveExpiredExperiment resolveExpiredExperimentUseCase(Ref ref) {
+  return ResolveExpiredExperiment(ref.watch(experimentsRepositoryProvider));
 }
 
 @Riverpod(keepAlive: true)
