@@ -17,31 +17,33 @@ class GalleryTemplateDetailSheet extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(AppSizes.spacingMd),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(template.name, style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: AppSizes.spacingXs),
-            Text(template.category),
-            const SizedBox(height: AppSizes.spacingMd),
-            Text(template.description),
-            const SizedBox(height: AppSizes.spacingMd),
-            _meta(
-              'Duration',
-              '${template.durationValue} ${template.durationUnit}',
-            ),
-            _meta('Frequency', template.frequency),
-            _meta('Hypothesis', template.hypothesis),
-            const SizedBox(height: AppSizes.spacingMd),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: onStartNow,
-                child: const Text('Start Now'),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(template.name, style: Theme.of(context).textTheme.titleLarge),
+              const SizedBox(height: AppSizes.spacingXs),
+              Text(template.category),
+              const SizedBox(height: AppSizes.spacingMd),
+              Text(template.description),
+              const SizedBox(height: AppSizes.spacingMd),
+              _meta(
+                'Duration',
+                '${template.durationValue} ${template.durationUnit}',
               ),
-            ),
-          ],
+              _meta('Frequency', template.frequency),
+              _meta('Hypothesis', template.hypothesis),
+              const SizedBox(height: AppSizes.spacingMd),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: onStartNow,
+                  child: const Text('Start Now'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

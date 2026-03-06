@@ -28,10 +28,12 @@ class AuthController extends _$AuthController {
         user = await ref
             .read(signUpWithEmailUseCaseProvider)
             .call(displayName: displayName, email: email, password: password);
+        if (!ref.mounted) return;
       } else {
         user = await ref
             .read(signInWithEmailUseCaseProvider)
             .call(email: email, password: password);
+        if (!ref.mounted) return;
       }
 
       await _postAuthBootstrap(user);
@@ -43,16 +45,19 @@ class AuthController extends _$AuthController {
 
     state = await AsyncValue.guard(() async {
       final user = await ref.read(signInWithGoogleUseCaseProvider).call();
+      if (!ref.mounted) return;
       await _postAuthBootstrap(user);
     });
   }
 
   Future<void> _postAuthBootstrap(AuthUser user) async {
     await ref.read(ensureUserDocumentUseCaseProvider).call(user);
+    if (!ref.mounted) return;
 
     final bool disabled = await ref
         .read(userRepositoryProvider)
         .isUserDisabled(user.id);
+    if (!ref.mounted) return;
     if (disabled) {
       await ref.read(signOutUseCaseProvider).call();
       throw const DisabledAccountException();

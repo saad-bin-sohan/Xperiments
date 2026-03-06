@@ -52,7 +52,7 @@ class HomeWidgetDataSource {
 
     await HomeWidget.updateWidget(
       name: providerName,
-      androidName: androidProviderName,
+      qualifiedAndroidName: androidProviderName,
     );
   }
 
