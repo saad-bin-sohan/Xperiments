@@ -10,7 +10,7 @@ part of 'gallery_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(galleryRemoteDataSource)
-const galleryRemoteDataSourceProvider = GalleryRemoteDataSourceProvider._();
+final galleryRemoteDataSourceProvider = GalleryRemoteDataSourceProvider._();
 
 final class GalleryRemoteDataSourceProvider
     extends
@@ -20,7 +20,7 @@ final class GalleryRemoteDataSourceProvider
           GalleryRemoteDataSource
         >
     with $Provider<GalleryRemoteDataSource> {
-  const GalleryRemoteDataSourceProvider._()
+  GalleryRemoteDataSourceProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,7 +58,7 @@ String _$galleryRemoteDataSourceHash() =>
     r'3855e0b482d8b6e6e06ca141c1740dc4d8103502';
 
 @ProviderFor(galleryRepository)
-const galleryRepositoryProvider = GalleryRepositoryProvider._();
+final galleryRepositoryProvider = GalleryRepositoryProvider._();
 
 final class GalleryRepositoryProvider
     extends
@@ -68,7 +68,7 @@ final class GalleryRepositoryProvider
           GalleryRepository
         >
     with $Provider<GalleryRepository> {
-  const GalleryRepositoryProvider._()
+  GalleryRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -105,7 +105,7 @@ final class GalleryRepositoryProvider
 String _$galleryRepositoryHash() => r'd96a2c4ed8187cac68a5774d7615606cbfc713a3';
 
 @ProviderFor(watchAllTemplatesUseCase)
-const watchAllTemplatesUseCaseProvider = WatchAllTemplatesUseCaseProvider._();
+final watchAllTemplatesUseCaseProvider = WatchAllTemplatesUseCaseProvider._();
 
 final class WatchAllTemplatesUseCaseProvider
     extends
@@ -115,7 +115,7 @@ final class WatchAllTemplatesUseCaseProvider
           WatchAllTemplates
         >
     with $Provider<WatchAllTemplates> {
-  const WatchAllTemplatesUseCaseProvider._()
+  WatchAllTemplatesUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -153,7 +153,7 @@ String _$watchAllTemplatesUseCaseHash() =>
     r'60f2ef019a31b085143678d3621af03a18d87bca';
 
 @ProviderFor(watchFeaturedTop3UseCase)
-const watchFeaturedTop3UseCaseProvider = WatchFeaturedTop3UseCaseProvider._();
+final watchFeaturedTop3UseCaseProvider = WatchFeaturedTop3UseCaseProvider._();
 
 final class WatchFeaturedTop3UseCaseProvider
     extends
@@ -163,7 +163,7 @@ final class WatchFeaturedTop3UseCaseProvider
           WatchFeaturedTop3
         >
     with $Provider<WatchFeaturedTop3> {
-  const WatchFeaturedTop3UseCaseProvider._()
+  WatchFeaturedTop3UseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -201,7 +201,7 @@ String _$watchFeaturedTop3UseCaseHash() =>
     r'658988608d1927ea57f230ff2fdccf1b61b586f2';
 
 @ProviderFor(watchCategorySectionsUseCase)
-const watchCategorySectionsUseCaseProvider =
+final watchCategorySectionsUseCaseProvider =
     WatchCategorySectionsUseCaseProvider._();
 
 final class WatchCategorySectionsUseCaseProvider
@@ -212,7 +212,7 @@ final class WatchCategorySectionsUseCaseProvider
           WatchCategorySections
         >
     with $Provider<WatchCategorySections> {
-  const WatchCategorySectionsUseCaseProvider._()
+  WatchCategorySectionsUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -250,7 +250,7 @@ String _$watchCategorySectionsUseCaseHash() =>
     r'4ade90f8e3d1c6311a01597818f14a88514f763c';
 
 @ProviderFor(watchTemplateByIdUseCase)
-const watchTemplateByIdUseCaseProvider = WatchTemplateByIdUseCaseProvider._();
+final watchTemplateByIdUseCaseProvider = WatchTemplateByIdUseCaseProvider._();
 
 final class WatchTemplateByIdUseCaseProvider
     extends
@@ -260,7 +260,7 @@ final class WatchTemplateByIdUseCaseProvider
           WatchTemplateById
         >
     with $Provider<WatchTemplateById> {
-  const WatchTemplateByIdUseCaseProvider._()
+  WatchTemplateByIdUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -298,7 +298,7 @@ String _$watchTemplateByIdUseCaseHash() =>
     r'ff4a3314ae2e7092fcc527d22194fc605d50fa8c';
 
 @ProviderFor(featuredTemplates)
-const featuredTemplatesProvider = FeaturedTemplatesProvider._();
+final featuredTemplatesProvider = FeaturedTemplatesProvider._();
 
 final class FeaturedTemplatesProvider
     extends
@@ -310,7 +310,7 @@ final class FeaturedTemplatesProvider
     with
         $FutureModifier<List<GalleryTemplate>>,
         $StreamProvider<List<GalleryTemplate>> {
-  const FeaturedTemplatesProvider._()
+  FeaturedTemplatesProvider._()
     : super(
         from: null,
         argument: null,
@@ -339,7 +339,7 @@ final class FeaturedTemplatesProvider
 String _$featuredTemplatesHash() => r'02e5a3f9d3914a5eb0e27e3108132047b1972551';
 
 @ProviderFor(galleryCategorySections)
-const galleryCategorySectionsProvider = GalleryCategorySectionsProvider._();
+final galleryCategorySectionsProvider = GalleryCategorySectionsProvider._();
 
 final class GalleryCategorySectionsProvider
     extends
@@ -351,7 +351,7 @@ final class GalleryCategorySectionsProvider
     with
         $FutureModifier<List<GalleryCategorySection>>,
         $StreamProvider<List<GalleryCategorySection>> {
-  const GalleryCategorySectionsProvider._()
+  GalleryCategorySectionsProvider._()
     : super(
         from: null,
         argument: null,
@@ -381,7 +381,7 @@ String _$galleryCategorySectionsHash() =>
     r'988f89790309c75f1e15c416e068bd9521e7d588';
 
 @ProviderFor(galleryTemplateById)
-const galleryTemplateByIdProvider = GalleryTemplateByIdFamily._();
+final galleryTemplateByIdProvider = GalleryTemplateByIdFamily._();
 
 final class GalleryTemplateByIdProvider
     extends
@@ -391,7 +391,7 @@ final class GalleryTemplateByIdProvider
           Stream<GalleryTemplate?>
         >
     with $FutureModifier<GalleryTemplate?>, $StreamProvider<GalleryTemplate?> {
-  const GalleryTemplateByIdProvider._({
+  GalleryTemplateByIdProvider._({
     required GalleryTemplateByIdFamily super.from,
     required String super.argument,
   }) : super(
@@ -440,7 +440,7 @@ String _$galleryTemplateByIdHash() =>
 
 final class GalleryTemplateByIdFamily extends $Family
     with $FunctionalFamilyOverride<Stream<GalleryTemplate?>, String> {
-  const GalleryTemplateByIdFamily._()
+  GalleryTemplateByIdFamily._()
     : super(
         retry: null,
         name: r'galleryTemplateByIdProvider',

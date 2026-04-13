@@ -10,11 +10,11 @@ part of 'checkin_flow_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(CheckinFlowController)
-const checkinFlowControllerProvider = CheckinFlowControllerProvider._();
+final checkinFlowControllerProvider = CheckinFlowControllerProvider._();
 
 final class CheckinFlowControllerProvider
     extends $NotifierProvider<CheckinFlowController, AsyncValue<void>> {
-  const CheckinFlowControllerProvider._()
+  CheckinFlowControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -49,7 +49,6 @@ abstract class _$CheckinFlowController extends $Notifier<AsyncValue<void>> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AsyncValue<void>, AsyncValue<void>>;
     final element =
         ref.element
@@ -59,6 +58,6 @@ abstract class _$CheckinFlowController extends $Notifier<AsyncValue<void>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

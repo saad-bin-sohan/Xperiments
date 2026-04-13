@@ -10,7 +10,7 @@ part of 'notifications_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(notificationsRemoteDataSource)
-const notificationsRemoteDataSourceProvider =
+final notificationsRemoteDataSourceProvider =
     NotificationsRemoteDataSourceProvider._();
 
 final class NotificationsRemoteDataSourceProvider
@@ -21,7 +21,7 @@ final class NotificationsRemoteDataSourceProvider
           NotificationsRemoteDataSource
         >
     with $Provider<NotificationsRemoteDataSource> {
-  const NotificationsRemoteDataSourceProvider._()
+  NotificationsRemoteDataSourceProvider._()
     : super(
         from: null,
         argument: null,
@@ -61,7 +61,7 @@ String _$notificationsRemoteDataSourceHash() =>
     r'7914d32d8328a85596ccbd7cc506c1ffb0e28d58';
 
 @ProviderFor(notificationsRepository)
-const notificationsRepositoryProvider = NotificationsRepositoryProvider._();
+final notificationsRepositoryProvider = NotificationsRepositoryProvider._();
 
 final class NotificationsRepositoryProvider
     extends
@@ -71,7 +71,7 @@ final class NotificationsRepositoryProvider
           NotificationsRepository
         >
     with $Provider<NotificationsRepository> {
-  const NotificationsRepositoryProvider._()
+  NotificationsRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -109,7 +109,7 @@ String _$notificationsRepositoryHash() =>
     r'009607eeeaebceed6b762b29239bddc90540848b';
 
 @ProviderFor(widgetSyncRepository)
-const widgetSyncRepositoryProvider = WidgetSyncRepositoryProvider._();
+final widgetSyncRepositoryProvider = WidgetSyncRepositoryProvider._();
 
 final class WidgetSyncRepositoryProvider
     extends
@@ -119,7 +119,7 @@ final class WidgetSyncRepositoryProvider
           WidgetSyncRepository
         >
     with $Provider<WidgetSyncRepository> {
-  const WidgetSyncRepositoryProvider._()
+  WidgetSyncRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -154,10 +154,10 @@ final class WidgetSyncRepositoryProvider
 }
 
 String _$widgetSyncRepositoryHash() =>
-    r'48cef975e757c07bac4353877f13aa6b3a69212c';
+    r'87e67d0f28e08e7d58de2a8e8818921efcd2e9a5';
 
 @ProviderFor(initializeNotificationsUseCase)
-const initializeNotificationsUseCaseProvider =
+final initializeNotificationsUseCaseProvider =
     InitializeNotificationsUseCaseProvider._();
 
 final class InitializeNotificationsUseCaseProvider
@@ -168,7 +168,7 @@ final class InitializeNotificationsUseCaseProvider
           InitializeNotifications
         >
     with $Provider<InitializeNotifications> {
-  const InitializeNotificationsUseCaseProvider._()
+  InitializeNotificationsUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -206,7 +206,7 @@ String _$initializeNotificationsUseCaseHash() =>
     r'abedc963ee5261e6c9b937298c17ca734a0d3f8e';
 
 @ProviderFor(requestNotificationPermissionUseCase)
-const requestNotificationPermissionUseCaseProvider =
+final requestNotificationPermissionUseCaseProvider =
     RequestNotificationPermissionUseCaseProvider._();
 
 final class RequestNotificationPermissionUseCaseProvider
@@ -217,7 +217,7 @@ final class RequestNotificationPermissionUseCaseProvider
           RequestNotificationPermission
         >
     with $Provider<RequestNotificationPermission> {
-  const RequestNotificationPermissionUseCaseProvider._()
+  RequestNotificationPermissionUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -258,7 +258,7 @@ String _$requestNotificationPermissionUseCaseHash() =>
     r'877a42cecfb1ec3fd1b8f076ef2e2b53609baa44';
 
 @ProviderFor(syncDeviceRegistrationUseCase)
-const syncDeviceRegistrationUseCaseProvider =
+final syncDeviceRegistrationUseCaseProvider =
     SyncDeviceRegistrationUseCaseProvider._();
 
 final class SyncDeviceRegistrationUseCaseProvider
@@ -269,7 +269,7 @@ final class SyncDeviceRegistrationUseCaseProvider
           SyncDeviceRegistration
         >
     with $Provider<SyncDeviceRegistration> {
-  const SyncDeviceRegistrationUseCaseProvider._()
+  SyncDeviceRegistrationUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -307,7 +307,7 @@ String _$syncDeviceRegistrationUseCaseHash() =>
     r'b698341edd68b9e5046093bbe1bad30ce0145447';
 
 @ProviderFor(removeDeviceRegistrationUseCase)
-const removeDeviceRegistrationUseCaseProvider =
+final removeDeviceRegistrationUseCaseProvider =
     RemoveDeviceRegistrationUseCaseProvider._();
 
 final class RemoveDeviceRegistrationUseCaseProvider
@@ -318,7 +318,7 @@ final class RemoveDeviceRegistrationUseCaseProvider
           RemoveDeviceRegistration
         >
     with $Provider<RemoveDeviceRegistration> {
-  const RemoveDeviceRegistrationUseCaseProvider._()
+  RemoveDeviceRegistrationUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -356,7 +356,7 @@ String _$removeDeviceRegistrationUseCaseHash() =>
     r'c0b3a3fac28ed6d87c67ed6016a0956e108930b3';
 
 @ProviderFor(watchNotificationOpensUseCase)
-const watchNotificationOpensUseCaseProvider =
+final watchNotificationOpensUseCaseProvider =
     WatchNotificationOpensUseCaseProvider._();
 
 final class WatchNotificationOpensUseCaseProvider
@@ -367,7 +367,7 @@ final class WatchNotificationOpensUseCaseProvider
           WatchNotificationOpens
         >
     with $Provider<WatchNotificationOpens> {
-  const WatchNotificationOpensUseCaseProvider._()
+  WatchNotificationOpensUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -405,7 +405,7 @@ String _$watchNotificationOpensUseCaseHash() =>
     r'594602052862306d69fa28c6703283b19ff1188b';
 
 @ProviderFor(watchForegroundNotificationsUseCase)
-const watchForegroundNotificationsUseCaseProvider =
+final watchForegroundNotificationsUseCaseProvider =
     WatchForegroundNotificationsUseCaseProvider._();
 
 final class WatchForegroundNotificationsUseCaseProvider
@@ -416,7 +416,7 @@ final class WatchForegroundNotificationsUseCaseProvider
           WatchForegroundNotifications
         >
     with $Provider<WatchForegroundNotifications> {
-  const WatchForegroundNotificationsUseCaseProvider._()
+  WatchForegroundNotificationsUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -455,7 +455,7 @@ String _$watchForegroundNotificationsUseCaseHash() =>
     r'93545b82951a68813c18f0f96969cc552f24d0a6';
 
 @ProviderFor(handleInitialNotificationRouteUseCase)
-const handleInitialNotificationRouteUseCaseProvider =
+final handleInitialNotificationRouteUseCaseProvider =
     HandleInitialNotificationRouteUseCaseProvider._();
 
 final class HandleInitialNotificationRouteUseCaseProvider
@@ -466,7 +466,7 @@ final class HandleInitialNotificationRouteUseCaseProvider
           HandleInitialNotificationRoute
         >
     with $Provider<HandleInitialNotificationRoute> {
-  const HandleInitialNotificationRouteUseCaseProvider._()
+  HandleInitialNotificationRouteUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -507,12 +507,12 @@ String _$handleInitialNotificationRouteUseCaseHash() =>
     r'8b6978be3c72ea56bb8f456c996759199a2fb396';
 
 @ProviderFor(notificationsBootstrap)
-const notificationsBootstrapProvider = NotificationsBootstrapProvider._();
+final notificationsBootstrapProvider = NotificationsBootstrapProvider._();
 
 final class NotificationsBootstrapProvider
     extends $FunctionalProvider<AsyncValue<void>, void, FutureOr<void>>
     with $FutureModifier<void>, $FutureProvider<void> {
-  const NotificationsBootstrapProvider._()
+  NotificationsBootstrapProvider._()
     : super(
         from: null,
         argument: null,
@@ -541,7 +541,7 @@ String _$notificationsBootstrapHash() =>
     r'f1d374438ab5b9c6975986f7e3f00d6c3aa27291';
 
 @ProviderFor(notificationOpenRoutes)
-const notificationOpenRoutesProvider = NotificationOpenRoutesProvider._();
+final notificationOpenRoutesProvider = NotificationOpenRoutesProvider._();
 
 final class NotificationOpenRoutesProvider
     extends
@@ -553,7 +553,7 @@ final class NotificationOpenRoutesProvider
     with
         $FutureModifier<AppNotificationRoute>,
         $StreamProvider<AppNotificationRoute> {
-  const NotificationOpenRoutesProvider._()
+  NotificationOpenRoutesProvider._()
     : super(
         from: null,
         argument: null,
@@ -583,7 +583,7 @@ String _$notificationOpenRoutesHash() =>
     r'81a90f97ea7921c964b27608cb309542647718e8';
 
 @ProviderFor(foregroundNotificationRoutes)
-const foregroundNotificationRoutesProvider =
+final foregroundNotificationRoutesProvider =
     ForegroundNotificationRoutesProvider._();
 
 final class ForegroundNotificationRoutesProvider
@@ -596,7 +596,7 @@ final class ForegroundNotificationRoutesProvider
     with
         $FutureModifier<AppNotificationRoute>,
         $StreamProvider<AppNotificationRoute> {
-  const ForegroundNotificationRoutesProvider._()
+  ForegroundNotificationRoutesProvider._()
     : super(
         from: null,
         argument: null,
@@ -626,7 +626,7 @@ String _$foregroundNotificationRoutesHash() =>
     r'69487dad343ebe3758a6fb455dbc48557e1b5db9';
 
 @ProviderFor(initialNotificationRoute)
-const initialNotificationRouteProvider = InitialNotificationRouteProvider._();
+final initialNotificationRouteProvider = InitialNotificationRouteProvider._();
 
 final class InitialNotificationRouteProvider
     extends
@@ -638,7 +638,7 @@ final class InitialNotificationRouteProvider
     with
         $FutureModifier<AppNotificationRoute?>,
         $FutureProvider<AppNotificationRoute?> {
-  const InitialNotificationRouteProvider._()
+  InitialNotificationRouteProvider._()
     : super(
         from: null,
         argument: null,
@@ -668,12 +668,12 @@ String _$initialNotificationRouteHash() =>
     r'1dec2d704c39789cbb5597e1a2b02c21b06751a0';
 
 @ProviderFor(widgetOpenRoutes)
-const widgetOpenRoutesProvider = WidgetOpenRoutesProvider._();
+final widgetOpenRoutesProvider = WidgetOpenRoutesProvider._();
 
 final class WidgetOpenRoutesProvider
     extends $FunctionalProvider<AsyncValue<String>, String, Stream<String>>
     with $FutureModifier<String>, $StreamProvider<String> {
-  const WidgetOpenRoutesProvider._()
+  WidgetOpenRoutesProvider._()
     : super(
         from: null,
         argument: null,
@@ -701,12 +701,12 @@ final class WidgetOpenRoutesProvider
 String _$widgetOpenRoutesHash() => r'47a972a239a72f31a7eb0e3efd6a671fa79c5e90';
 
 @ProviderFor(initialWidgetRoute)
-const initialWidgetRouteProvider = InitialWidgetRouteProvider._();
+final initialWidgetRouteProvider = InitialWidgetRouteProvider._();
 
 final class InitialWidgetRouteProvider
     extends $FunctionalProvider<AsyncValue<String?>, String?, FutureOr<String?>>
     with $FutureModifier<String?>, $FutureProvider<String?> {
-  const InitialWidgetRouteProvider._()
+  InitialWidgetRouteProvider._()
     : super(
         from: null,
         argument: null,

@@ -10,11 +10,11 @@ part of 'profile_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(ProfileController)
-const profileControllerProvider = ProfileControllerProvider._();
+final profileControllerProvider = ProfileControllerProvider._();
 
 final class ProfileControllerProvider
     extends $NotifierProvider<ProfileController, AsyncValue<void>> {
-  const ProfileControllerProvider._()
+  ProfileControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -48,7 +48,6 @@ abstract class _$ProfileController extends $Notifier<AsyncValue<void>> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AsyncValue<void>, AsyncValue<void>>;
     final element =
         ref.element
@@ -58,6 +57,6 @@ abstract class _$ProfileController extends $Notifier<AsyncValue<void>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

@@ -10,7 +10,7 @@ part of 'history_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(historyRemoteDataSource)
-const historyRemoteDataSourceProvider = HistoryRemoteDataSourceProvider._();
+final historyRemoteDataSourceProvider = HistoryRemoteDataSourceProvider._();
 
 final class HistoryRemoteDataSourceProvider
     extends
@@ -20,7 +20,7 @@ final class HistoryRemoteDataSourceProvider
           HistoryRemoteDataSource
         >
     with $Provider<HistoryRemoteDataSource> {
-  const HistoryRemoteDataSourceProvider._()
+  HistoryRemoteDataSourceProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,7 +58,7 @@ String _$historyRemoteDataSourceHash() =>
     r'dc2046fe7d8908373a3057bbbeaa0204917dac34';
 
 @ProviderFor(historyRepository)
-const historyRepositoryProvider = HistoryRepositoryProvider._();
+final historyRepositoryProvider = HistoryRepositoryProvider._();
 
 final class HistoryRepositoryProvider
     extends
@@ -68,7 +68,7 @@ final class HistoryRepositoryProvider
           HistoryRepository
         >
     with $Provider<HistoryRepository> {
-  const HistoryRepositoryProvider._()
+  HistoryRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -105,7 +105,7 @@ final class HistoryRepositoryProvider
 String _$historyRepositoryHash() => r'2498307ddc2dd7023e60327cb953e9b10497e520';
 
 @ProviderFor(watchHistoryGroupedByLabUseCase)
-const watchHistoryGroupedByLabUseCaseProvider =
+final watchHistoryGroupedByLabUseCaseProvider =
     WatchHistoryGroupedByLabUseCaseProvider._();
 
 final class WatchHistoryGroupedByLabUseCaseProvider
@@ -116,7 +116,7 @@ final class WatchHistoryGroupedByLabUseCaseProvider
           WatchHistoryGroupedByLab
         >
     with $Provider<WatchHistoryGroupedByLab> {
-  const WatchHistoryGroupedByLabUseCaseProvider._()
+  WatchHistoryGroupedByLabUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -154,7 +154,7 @@ String _$watchHistoryGroupedByLabUseCaseHash() =>
     r'4c1ada2c0821f5b8cc14c3c320892767697e1276';
 
 @ProviderFor(saveFinalReflectionUseCase)
-const saveFinalReflectionUseCaseProvider =
+final saveFinalReflectionUseCaseProvider =
     SaveFinalReflectionUseCaseProvider._();
 
 final class SaveFinalReflectionUseCaseProvider
@@ -165,7 +165,7 @@ final class SaveFinalReflectionUseCaseProvider
           SaveFinalReflection
         >
     with $Provider<SaveFinalReflection> {
-  const SaveFinalReflectionUseCaseProvider._()
+  SaveFinalReflectionUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -203,7 +203,7 @@ String _$saveFinalReflectionUseCaseHash() =>
     r'e09f38f51ee6f5c32690f203891bf3a954127596';
 
 @ProviderFor(saveLessonsLearnedUseCase)
-const saveLessonsLearnedUseCaseProvider = SaveLessonsLearnedUseCaseProvider._();
+final saveLessonsLearnedUseCaseProvider = SaveLessonsLearnedUseCaseProvider._();
 
 final class SaveLessonsLearnedUseCaseProvider
     extends
@@ -213,7 +213,7 @@ final class SaveLessonsLearnedUseCaseProvider
           SaveLessonsLearned
         >
     with $Provider<SaveLessonsLearned> {
-  const SaveLessonsLearnedUseCaseProvider._()
+  SaveLessonsLearnedUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -251,12 +251,12 @@ String _$saveLessonsLearnedUseCaseHash() =>
     r'178549c03231344b59da36553bc5dd1be397a1a7';
 
 @ProviderFor(saveDebriefUseCase)
-const saveDebriefUseCaseProvider = SaveDebriefUseCaseProvider._();
+final saveDebriefUseCaseProvider = SaveDebriefUseCaseProvider._();
 
 final class SaveDebriefUseCaseProvider
     extends $FunctionalProvider<SaveDebrief, SaveDebrief, SaveDebrief>
     with $Provider<SaveDebrief> {
-  const SaveDebriefUseCaseProvider._()
+  SaveDebriefUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -293,7 +293,7 @@ String _$saveDebriefUseCaseHash() =>
     r'377ec3f4b7fe5b2545e019f2fca5545af50c0740';
 
 @ProviderFor(searchHistoryContentUseCase)
-const searchHistoryContentUseCaseProvider =
+final searchHistoryContentUseCaseProvider =
     SearchHistoryContentUseCaseProvider._();
 
 final class SearchHistoryContentUseCaseProvider
@@ -304,7 +304,7 @@ final class SearchHistoryContentUseCaseProvider
           SearchHistoryContent
         >
     with $Provider<SearchHistoryContent> {
-  const SearchHistoryContentUseCaseProvider._()
+  SearchHistoryContentUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -342,7 +342,7 @@ String _$searchHistoryContentUseCaseHash() =>
     r'ad41c0d8c12f9f10b06ba2e70358a981cfdc81d9';
 
 @ProviderFor(buildMonthlySummaryUseCase)
-const buildMonthlySummaryUseCaseProvider =
+final buildMonthlySummaryUseCaseProvider =
     BuildMonthlySummaryUseCaseProvider._();
 
 final class BuildMonthlySummaryUseCaseProvider
@@ -353,7 +353,7 @@ final class BuildMonthlySummaryUseCaseProvider
           BuildMonthlySummary
         >
     with $Provider<BuildMonthlySummary> {
-  const BuildMonthlySummaryUseCaseProvider._()
+  BuildMonthlySummaryUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -391,7 +391,7 @@ String _$buildMonthlySummaryUseCaseHash() =>
     r'5f3fc755a84e42387dd25c9dcae44862cd96b3ca';
 
 @ProviderFor(buildYearlySummaryUseCase)
-const buildYearlySummaryUseCaseProvider = BuildYearlySummaryUseCaseProvider._();
+final buildYearlySummaryUseCaseProvider = BuildYearlySummaryUseCaseProvider._();
 
 final class BuildYearlySummaryUseCaseProvider
     extends
@@ -401,7 +401,7 @@ final class BuildYearlySummaryUseCaseProvider
           BuildYearlySummary
         >
     with $Provider<BuildYearlySummary> {
-  const BuildYearlySummaryUseCaseProvider._()
+  BuildYearlySummaryUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -439,7 +439,7 @@ String _$buildYearlySummaryUseCaseHash() =>
     r'1583dbe9b3df20b4eb41768cd22a588c4f6235d5';
 
 @ProviderFor(historyGroups)
-const historyGroupsProvider = HistoryGroupsProvider._();
+final historyGroupsProvider = HistoryGroupsProvider._();
 
 final class HistoryGroupsProvider
     extends
@@ -451,7 +451,7 @@ final class HistoryGroupsProvider
     with
         $FutureModifier<List<HistoryExperimentGroup>>,
         $StreamProvider<List<HistoryExperimentGroup>> {
-  const HistoryGroupsProvider._()
+  HistoryGroupsProvider._()
     : super(
         from: null,
         argument: null,
@@ -480,7 +480,7 @@ final class HistoryGroupsProvider
 String _$historyGroupsHash() => r'e6016d541b147e57c7d39912efd0d7fafcc67ff4';
 
 @ProviderFor(historySearch)
-const historySearchProvider = HistorySearchFamily._();
+final historySearchProvider = HistorySearchFamily._();
 
 final class HistorySearchProvider
     extends
@@ -492,7 +492,7 @@ final class HistorySearchProvider
     with
         $FutureModifier<List<HistorySearchResult>>,
         $FutureProvider<List<HistorySearchResult>> {
-  const HistorySearchProvider._({
+  HistorySearchProvider._({
     required HistorySearchFamily super.from,
     required String super.argument,
   }) : super(
@@ -541,7 +541,7 @@ String _$historySearchHash() => r'a1945d3e4268d9f5519bc1a66772d797cefc0e44';
 final class HistorySearchFamily extends $Family
     with
         $FunctionalFamilyOverride<FutureOr<List<HistorySearchResult>>, String> {
-  const HistorySearchFamily._()
+  HistorySearchFamily._()
     : super(
         retry: null,
         name: r'historySearchProvider',
@@ -558,7 +558,7 @@ final class HistorySearchFamily extends $Family
 }
 
 @ProviderFor(monthlySummary)
-const monthlySummaryProvider = MonthlySummaryProvider._();
+final monthlySummaryProvider = MonthlySummaryProvider._();
 
 final class MonthlySummaryProvider
     extends
@@ -570,7 +570,7 @@ final class MonthlySummaryProvider
     with
         $FutureModifier<SummaryTextResult>,
         $FutureProvider<SummaryTextResult> {
-  const MonthlySummaryProvider._()
+  MonthlySummaryProvider._()
     : super(
         from: null,
         argument: null,
@@ -599,7 +599,7 @@ final class MonthlySummaryProvider
 String _$monthlySummaryHash() => r'12285bd2706cafa91af4ce9ec82a389d3aaebf37';
 
 @ProviderFor(yearlySummary)
-const yearlySummaryProvider = YearlySummaryProvider._();
+final yearlySummaryProvider = YearlySummaryProvider._();
 
 final class YearlySummaryProvider
     extends
@@ -611,7 +611,7 @@ final class YearlySummaryProvider
     with
         $FutureModifier<SummaryTextResult>,
         $FutureProvider<SummaryTextResult> {
-  const YearlySummaryProvider._()
+  YearlySummaryProvider._()
     : super(
         from: null,
         argument: null,

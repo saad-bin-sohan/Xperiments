@@ -163,10 +163,11 @@ class NotificationsRemoteDataSource {
   Future<String> _safeTimezone() async {
     try {
       final timezone = await FlutterTimezone.getLocalTimezone();
-      if (timezone.trim().isEmpty) {
+      final identifier = timezone.identifier.trim();
+      if (identifier.isEmpty) {
         return 'UTC';
       }
-      return timezone;
+      return identifier;
     } catch (_) {
       return 'UTC';
     }

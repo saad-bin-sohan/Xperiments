@@ -10,7 +10,7 @@ part of 'auth_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(authRemoteDataSource)
-const authRemoteDataSourceProvider = AuthRemoteDataSourceProvider._();
+final authRemoteDataSourceProvider = AuthRemoteDataSourceProvider._();
 
 final class AuthRemoteDataSourceProvider
     extends
@@ -20,7 +20,7 @@ final class AuthRemoteDataSourceProvider
           AuthRemoteDataSource
         >
     with $Provider<AuthRemoteDataSource> {
-  const AuthRemoteDataSourceProvider._()
+  AuthRemoteDataSourceProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,7 +58,7 @@ String _$authRemoteDataSourceHash() =>
     r'9089ed0c8d6d73b8d6984cdb1023137f847e0155';
 
 @ProviderFor(userRemoteDataSource)
-const userRemoteDataSourceProvider = UserRemoteDataSourceProvider._();
+final userRemoteDataSourceProvider = UserRemoteDataSourceProvider._();
 
 final class UserRemoteDataSourceProvider
     extends
@@ -68,7 +68,7 @@ final class UserRemoteDataSourceProvider
           UserRemoteDataSource
         >
     with $Provider<UserRemoteDataSource> {
-  const UserRemoteDataSourceProvider._()
+  UserRemoteDataSourceProvider._()
     : super(
         from: null,
         argument: null,
@@ -106,12 +106,12 @@ String _$userRemoteDataSourceHash() =>
     r'52142422ac240695457aa701d93e13c5e732d88f';
 
 @ProviderFor(authRepository)
-const authRepositoryProvider = AuthRepositoryProvider._();
+final authRepositoryProvider = AuthRepositoryProvider._();
 
 final class AuthRepositoryProvider
     extends $FunctionalProvider<AuthRepository, AuthRepository, AuthRepository>
     with $Provider<AuthRepository> {
-  const AuthRepositoryProvider._()
+  AuthRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -147,12 +147,12 @@ final class AuthRepositoryProvider
 String _$authRepositoryHash() => r'30cfea8a2e8fac262468c7bccf4f2d3f1bf711ad';
 
 @ProviderFor(userRepository)
-const userRepositoryProvider = UserRepositoryProvider._();
+final userRepositoryProvider = UserRepositoryProvider._();
 
 final class UserRepositoryProvider
     extends $FunctionalProvider<UserRepository, UserRepository, UserRepository>
     with $Provider<UserRepository> {
-  const UserRepositoryProvider._()
+  UserRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -188,13 +188,13 @@ final class UserRepositoryProvider
 String _$userRepositoryHash() => r'52f2b8da1aa605e40bd45a1e765c83ebd888b7b5';
 
 @ProviderFor(signInWithEmailUseCase)
-const signInWithEmailUseCaseProvider = SignInWithEmailUseCaseProvider._();
+final signInWithEmailUseCaseProvider = SignInWithEmailUseCaseProvider._();
 
 final class SignInWithEmailUseCaseProvider
     extends
         $FunctionalProvider<SignInWithEmail, SignInWithEmail, SignInWithEmail>
     with $Provider<SignInWithEmail> {
-  const SignInWithEmailUseCaseProvider._()
+  SignInWithEmailUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -231,13 +231,13 @@ String _$signInWithEmailUseCaseHash() =>
     r'e2ef5799afd6cf4ed3703c186a37ffb49f8740c6';
 
 @ProviderFor(signUpWithEmailUseCase)
-const signUpWithEmailUseCaseProvider = SignUpWithEmailUseCaseProvider._();
+final signUpWithEmailUseCaseProvider = SignUpWithEmailUseCaseProvider._();
 
 final class SignUpWithEmailUseCaseProvider
     extends
         $FunctionalProvider<SignUpWithEmail, SignUpWithEmail, SignUpWithEmail>
     with $Provider<SignUpWithEmail> {
-  const SignUpWithEmailUseCaseProvider._()
+  SignUpWithEmailUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -274,7 +274,7 @@ String _$signUpWithEmailUseCaseHash() =>
     r'443727cdaa764d6f521ecce6e971980f85f0acd5';
 
 @ProviderFor(signInWithGoogleUseCase)
-const signInWithGoogleUseCaseProvider = SignInWithGoogleUseCaseProvider._();
+final signInWithGoogleUseCaseProvider = SignInWithGoogleUseCaseProvider._();
 
 final class SignInWithGoogleUseCaseProvider
     extends
@@ -284,7 +284,7 @@ final class SignInWithGoogleUseCaseProvider
           SignInWithGoogle
         >
     with $Provider<SignInWithGoogle> {
-  const SignInWithGoogleUseCaseProvider._()
+  SignInWithGoogleUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -321,12 +321,12 @@ String _$signInWithGoogleUseCaseHash() =>
     r'ff0186b9ffdca175fc398b3da319f87a577c3902';
 
 @ProviderFor(signOutUseCase)
-const signOutUseCaseProvider = SignOutUseCaseProvider._();
+final signOutUseCaseProvider = SignOutUseCaseProvider._();
 
 final class SignOutUseCaseProvider
     extends $FunctionalProvider<SignOut, SignOut, SignOut>
     with $Provider<SignOut> {
-  const SignOutUseCaseProvider._()
+  SignOutUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -362,7 +362,7 @@ final class SignOutUseCaseProvider
 String _$signOutUseCaseHash() => r'b76322506bddb60468f1d6c4c33c848a9dd3f417';
 
 @ProviderFor(ensureUserDocumentUseCase)
-const ensureUserDocumentUseCaseProvider = EnsureUserDocumentUseCaseProvider._();
+final ensureUserDocumentUseCaseProvider = EnsureUserDocumentUseCaseProvider._();
 
 final class EnsureUserDocumentUseCaseProvider
     extends
@@ -372,7 +372,7 @@ final class EnsureUserDocumentUseCaseProvider
           EnsureUserDocument
         >
     with $Provider<EnsureUserDocument> {
-  const EnsureUserDocumentUseCaseProvider._()
+  EnsureUserDocumentUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -410,7 +410,7 @@ String _$ensureUserDocumentUseCaseHash() =>
     r'63481f3f909c7c18e7d39d26ffd2fbdac6b52bb0';
 
 @ProviderFor(observeAuthStateUseCase)
-const observeAuthStateUseCaseProvider = ObserveAuthStateUseCaseProvider._();
+final observeAuthStateUseCaseProvider = ObserveAuthStateUseCaseProvider._();
 
 final class ObserveAuthStateUseCaseProvider
     extends
@@ -420,7 +420,7 @@ final class ObserveAuthStateUseCaseProvider
           ObserveAuthState
         >
     with $Provider<ObserveAuthState> {
-  const ObserveAuthStateUseCaseProvider._()
+  ObserveAuthStateUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -457,7 +457,7 @@ String _$observeAuthStateUseCaseHash() =>
     r'a490ad9026b41d40cb0466297c3a4ed10d0138d9';
 
 @ProviderFor(authSession)
-const authSessionProvider = AuthSessionProvider._();
+final authSessionProvider = AuthSessionProvider._();
 
 final class AuthSessionProvider
     extends
@@ -467,7 +467,7 @@ final class AuthSessionProvider
           Stream<AuthSession>
         >
     with $FutureModifier<AuthSession>, $StreamProvider<AuthSession> {
-  const AuthSessionProvider._()
+  AuthSessionProvider._()
     : super(
         from: null,
         argument: null,
@@ -496,12 +496,12 @@ final class AuthSessionProvider
 String _$authSessionHash() => r'7458c3b88d0df222a02a667cba7d6fb2febda9ad';
 
 @ProviderFor(currentAuthUser)
-const currentAuthUserProvider = CurrentAuthUserProvider._();
+final currentAuthUserProvider = CurrentAuthUserProvider._();
 
 final class CurrentAuthUserProvider
     extends $FunctionalProvider<AuthUser?, AuthUser?, AuthUser?>
     with $Provider<AuthUser?> {
-  const CurrentAuthUserProvider._()
+  CurrentAuthUserProvider._()
     : super(
         from: null,
         argument: null,
@@ -537,12 +537,12 @@ final class CurrentAuthUserProvider
 String _$currentAuthUserHash() => r'de49747928954c9ab866502e0d17e1ee53d88e80';
 
 @ProviderFor(firebaseCurrentUser)
-const firebaseCurrentUserProvider = FirebaseCurrentUserProvider._();
+final firebaseCurrentUserProvider = FirebaseCurrentUserProvider._();
 
 final class FirebaseCurrentUserProvider
     extends $FunctionalProvider<User?, User?, User?>
     with $Provider<User?> {
-  const FirebaseCurrentUserProvider._()
+  FirebaseCurrentUserProvider._()
     : super(
         from: null,
         argument: null,

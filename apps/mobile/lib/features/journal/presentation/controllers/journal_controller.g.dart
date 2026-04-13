@@ -10,11 +10,11 @@ part of 'journal_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(JournalController)
-const journalControllerProvider = JournalControllerProvider._();
+final journalControllerProvider = JournalControllerProvider._();
 
 final class JournalControllerProvider
     extends $NotifierProvider<JournalController, AsyncValue<void>> {
-  const JournalControllerProvider._()
+  JournalControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -48,7 +48,6 @@ abstract class _$JournalController extends $Notifier<AsyncValue<void>> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AsyncValue<void>, AsyncValue<void>>;
     final element =
         ref.element
@@ -58,6 +57,6 @@ abstract class _$JournalController extends $Notifier<AsyncValue<void>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

@@ -10,12 +10,12 @@ part of 'auth_gate_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(authGateBootstrap)
-const authGateBootstrapProvider = AuthGateBootstrapProvider._();
+final authGateBootstrapProvider = AuthGateBootstrapProvider._();
 
 final class AuthGateBootstrapProvider
     extends $FunctionalProvider<AsyncValue<void>, void, FutureOr<void>>
     with $FutureModifier<void>, $FutureProvider<void> {
-  const AuthGateBootstrapProvider._()
+  AuthGateBootstrapProvider._()
     : super(
         from: null,
         argument: null,

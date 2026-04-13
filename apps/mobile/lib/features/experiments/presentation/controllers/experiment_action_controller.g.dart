@@ -10,12 +10,12 @@ part of 'experiment_action_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(ExperimentActionController)
-const experimentActionControllerProvider =
+final experimentActionControllerProvider =
     ExperimentActionControllerProvider._();
 
 final class ExperimentActionControllerProvider
     extends $NotifierProvider<ExperimentActionController, AsyncValue<void>> {
-  const ExperimentActionControllerProvider._()
+  ExperimentActionControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -51,7 +51,6 @@ abstract class _$ExperimentActionController
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AsyncValue<void>, AsyncValue<void>>;
     final element =
         ref.element
@@ -61,6 +60,6 @@ abstract class _$ExperimentActionController
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

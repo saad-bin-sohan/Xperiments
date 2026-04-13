@@ -10,7 +10,7 @@ part of 'checkin_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(checkinRemoteDataSource)
-const checkinRemoteDataSourceProvider = CheckinRemoteDataSourceProvider._();
+final checkinRemoteDataSourceProvider = CheckinRemoteDataSourceProvider._();
 
 final class CheckinRemoteDataSourceProvider
     extends
@@ -20,7 +20,7 @@ final class CheckinRemoteDataSourceProvider
           CheckinRemoteDataSource
         >
     with $Provider<CheckinRemoteDataSource> {
-  const CheckinRemoteDataSourceProvider._()
+  CheckinRemoteDataSourceProvider._()
     : super(
         from: null,
         argument: null,
@@ -55,10 +55,10 @@ final class CheckinRemoteDataSourceProvider
 }
 
 String _$checkinRemoteDataSourceHash() =>
-    r'cfd75f19f834c0242263e788b89e6d1007886911';
+    r'0d51bceb3e82ec3a4412fa51c1734f7e721bb1c6';
 
 @ProviderFor(checkinRepository)
-const checkinRepositoryProvider = CheckinRepositoryProvider._();
+final checkinRepositoryProvider = CheckinRepositoryProvider._();
 
 final class CheckinRepositoryProvider
     extends
@@ -68,7 +68,7 @@ final class CheckinRepositoryProvider
           CheckinRepository
         >
     with $Provider<CheckinRepository> {
-  const CheckinRepositoryProvider._()
+  CheckinRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -105,7 +105,7 @@ final class CheckinRepositoryProvider
 String _$checkinRepositoryHash() => r'61977a843870fee6dbf359e45cf384a6ddeb89ee';
 
 @ProviderFor(getCheckinForDateUseCase)
-const getCheckinForDateUseCaseProvider = GetCheckinForDateUseCaseProvider._();
+final getCheckinForDateUseCaseProvider = GetCheckinForDateUseCaseProvider._();
 
 final class GetCheckinForDateUseCaseProvider
     extends
@@ -115,7 +115,7 @@ final class GetCheckinForDateUseCaseProvider
           GetCheckinForDate
         >
     with $Provider<GetCheckinForDate> {
-  const GetCheckinForDateUseCaseProvider._()
+  GetCheckinForDateUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -153,12 +153,12 @@ String _$getCheckinForDateUseCaseHash() =>
     r'b4f7ea5d7a18eb7f22cae956dec87d0022bd5584';
 
 @ProviderFor(upsertCheckinUseCase)
-const upsertCheckinUseCaseProvider = UpsertCheckinUseCaseProvider._();
+final upsertCheckinUseCaseProvider = UpsertCheckinUseCaseProvider._();
 
 final class UpsertCheckinUseCaseProvider
     extends $FunctionalProvider<UpsertCheckin, UpsertCheckin, UpsertCheckin>
     with $Provider<UpsertCheckin> {
-  const UpsertCheckinUseCaseProvider._()
+  UpsertCheckinUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -195,12 +195,12 @@ String _$upsertCheckinUseCaseHash() =>
     r'91a090ff0f1fea44360fc6ebac43d2fadb331a8f';
 
 @ProviderFor(markRestDayUseCase)
-const markRestDayUseCaseProvider = MarkRestDayUseCaseProvider._();
+final markRestDayUseCaseProvider = MarkRestDayUseCaseProvider._();
 
 final class MarkRestDayUseCaseProvider
     extends $FunctionalProvider<MarkRestDay, MarkRestDay, MarkRestDay>
     with $Provider<MarkRestDay> {
-  const MarkRestDayUseCaseProvider._()
+  MarkRestDayUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -237,7 +237,7 @@ String _$markRestDayUseCaseHash() =>
     r'51d3c30bbf7d9a117e89bec425668f2ee1aaebfe';
 
 @ProviderFor(uploadCheckinPhotoUseCase)
-const uploadCheckinPhotoUseCaseProvider = UploadCheckinPhotoUseCaseProvider._();
+final uploadCheckinPhotoUseCaseProvider = UploadCheckinPhotoUseCaseProvider._();
 
 final class UploadCheckinPhotoUseCaseProvider
     extends
@@ -247,7 +247,7 @@ final class UploadCheckinPhotoUseCaseProvider
           UploadCheckinPhoto
         >
     with $Provider<UploadCheckinPhoto> {
-  const UploadCheckinPhotoUseCaseProvider._()
+  UploadCheckinPhotoUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -285,7 +285,7 @@ String _$uploadCheckinPhotoUseCaseHash() =>
     r'dc28b8085194aa13745d93af7611c5702ba3eaf3';
 
 @ProviderFor(checkinForDate)
-const checkinForDateProvider = CheckinForDateFamily._();
+final checkinForDateProvider = CheckinForDateFamily._();
 
 final class CheckinForDateProvider
     extends
@@ -295,7 +295,7 @@ final class CheckinForDateProvider
           FutureOr<CheckinRecord?>
         >
     with $FutureModifier<CheckinRecord?>, $FutureProvider<CheckinRecord?> {
-  const CheckinForDateProvider._({
+  CheckinForDateProvider._({
     required CheckinForDateFamily super.from,
     required CheckinLookupArgs super.argument,
   }) : super(
@@ -344,7 +344,7 @@ String _$checkinForDateHash() => r'fbbe0c09028c75d8077651f86bc1119a8b84a12e';
 final class CheckinForDateFamily extends $Family
     with
         $FunctionalFamilyOverride<FutureOr<CheckinRecord?>, CheckinLookupArgs> {
-  const CheckinForDateFamily._()
+  CheckinForDateFamily._()
     : super(
         retry: null,
         name: r'checkinForDateProvider',

@@ -45,9 +45,9 @@ class GalleryTabScreen extends ConsumerWidget {
                 value: featuredAsync,
                 data: (featured) {
                   if (featured.isEmpty) {
-                    return const SizedBox(
-                      height: 140,
-                      child: AppEmptyState(
+                    return ConstrainedBox(
+                      constraints: const BoxConstraints(minHeight: 140),
+                      child: const AppEmptyState(
                         title: 'No featured templates',
                         message: 'Featured experiments will appear here.',
                         icon: Icons.star_outline,
@@ -74,9 +74,9 @@ class GalleryTabScreen extends ConsumerWidget {
                 value: sectionsAsync,
                 data: (sections) {
                   if (sections.isEmpty) {
-                    return const SizedBox(
-                      height: 220,
-                      child: AppEmptyState(
+                    return ConstrainedBox(
+                      constraints: const BoxConstraints(minHeight: 220),
+                      child: const AppEmptyState(
                         title: 'Gallery is empty',
                         message:
                             'Experiment templates from Firestore will appear here.',

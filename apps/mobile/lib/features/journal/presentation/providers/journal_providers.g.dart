@@ -10,7 +10,7 @@ part of 'journal_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(journalRemoteDataSource)
-const journalRemoteDataSourceProvider = JournalRemoteDataSourceProvider._();
+final journalRemoteDataSourceProvider = JournalRemoteDataSourceProvider._();
 
 final class JournalRemoteDataSourceProvider
     extends
@@ -20,7 +20,7 @@ final class JournalRemoteDataSourceProvider
           JournalRemoteDataSource
         >
     with $Provider<JournalRemoteDataSource> {
-  const JournalRemoteDataSourceProvider._()
+  JournalRemoteDataSourceProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,7 +58,7 @@ String _$journalRemoteDataSourceHash() =>
     r'c7f9fa1deb7b27087feff13477617284811c766a';
 
 @ProviderFor(journalRepository)
-const journalRepositoryProvider = JournalRepositoryProvider._();
+final journalRepositoryProvider = JournalRepositoryProvider._();
 
 final class JournalRepositoryProvider
     extends
@@ -68,7 +68,7 @@ final class JournalRepositoryProvider
           JournalRepository
         >
     with $Provider<JournalRepository> {
-  const JournalRepositoryProvider._()
+  JournalRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -105,13 +105,13 @@ final class JournalRepositoryProvider
 String _$journalRepositoryHash() => r'94c8dba652a4e1ff7a38bf955ab26291b9d89b43';
 
 @ProviderFor(watchLabEntriesUseCase)
-const watchLabEntriesUseCaseProvider = WatchLabEntriesUseCaseProvider._();
+final watchLabEntriesUseCaseProvider = WatchLabEntriesUseCaseProvider._();
 
 final class WatchLabEntriesUseCaseProvider
     extends
         $FunctionalProvider<WatchLabEntries, WatchLabEntries, WatchLabEntries>
     with $Provider<WatchLabEntries> {
-  const WatchLabEntriesUseCaseProvider._()
+  WatchLabEntriesUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -148,7 +148,7 @@ String _$watchLabEntriesUseCaseHash() =>
     r'6b3639f9ded0694120f56008026e8b8b15ff0230';
 
 @ProviderFor(saveJournalEntryUseCase)
-const saveJournalEntryUseCaseProvider = SaveJournalEntryUseCaseProvider._();
+final saveJournalEntryUseCaseProvider = SaveJournalEntryUseCaseProvider._();
 
 final class SaveJournalEntryUseCaseProvider
     extends
@@ -158,7 +158,7 @@ final class SaveJournalEntryUseCaseProvider
           SaveJournalEntry
         >
     with $Provider<SaveJournalEntry> {
-  const SaveJournalEntryUseCaseProvider._()
+  SaveJournalEntryUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -195,7 +195,7 @@ String _$saveJournalEntryUseCaseHash() =>
     r'e6ca4fba320818748d557dd9a5181f730369c345';
 
 @ProviderFor(deleteJournalEntryUseCase)
-const deleteJournalEntryUseCaseProvider = DeleteJournalEntryUseCaseProvider._();
+final deleteJournalEntryUseCaseProvider = DeleteJournalEntryUseCaseProvider._();
 
 final class DeleteJournalEntryUseCaseProvider
     extends
@@ -205,7 +205,7 @@ final class DeleteJournalEntryUseCaseProvider
           DeleteJournalEntry
         >
     with $Provider<DeleteJournalEntry> {
-  const DeleteJournalEntryUseCaseProvider._()
+  DeleteJournalEntryUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -243,7 +243,7 @@ String _$deleteJournalEntryUseCaseHash() =>
     r'1dc2e112eea573a0911562a2a2e15b5348453547';
 
 @ProviderFor(searchLabEntriesUseCase)
-const searchLabEntriesUseCaseProvider = SearchLabEntriesUseCaseProvider._();
+final searchLabEntriesUseCaseProvider = SearchLabEntriesUseCaseProvider._();
 
 final class SearchLabEntriesUseCaseProvider
     extends
@@ -253,7 +253,7 @@ final class SearchLabEntriesUseCaseProvider
           SearchLabEntries
         >
     with $Provider<SearchLabEntries> {
-  const SearchLabEntriesUseCaseProvider._()
+  SearchLabEntriesUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -290,7 +290,7 @@ String _$searchLabEntriesUseCaseHash() =>
     r'ec78d370293e719945afcfd190e740a30f079af8';
 
 @ProviderFor(labJournalEntries)
-const labJournalEntriesProvider = LabJournalEntriesFamily._();
+final labJournalEntriesProvider = LabJournalEntriesFamily._();
 
 final class LabJournalEntriesProvider
     extends
@@ -302,7 +302,7 @@ final class LabJournalEntriesProvider
     with
         $FutureModifier<List<JournalEntry>>,
         $StreamProvider<List<JournalEntry>> {
-  const LabJournalEntriesProvider._({
+  LabJournalEntriesProvider._({
     required LabJournalEntriesFamily super.from,
     required String super.argument,
   }) : super(
@@ -350,7 +350,7 @@ String _$labJournalEntriesHash() => r'6818d5bed5c98b11d58cb35a04e4f2bb8cb10262';
 
 final class LabJournalEntriesFamily extends $Family
     with $FunctionalFamilyOverride<Stream<List<JournalEntry>>, String> {
-  const LabJournalEntriesFamily._()
+  LabJournalEntriesFamily._()
     : super(
         retry: null,
         name: r'labJournalEntriesProvider',
@@ -367,7 +367,7 @@ final class LabJournalEntriesFamily extends $Family
 }
 
 @ProviderFor(labJournalSearch)
-const labJournalSearchProvider = LabJournalSearchFamily._();
+final labJournalSearchProvider = LabJournalSearchFamily._();
 
 final class LabJournalSearchProvider
     extends
@@ -379,7 +379,7 @@ final class LabJournalSearchProvider
     with
         $FutureModifier<List<JournalEntry>>,
         $FutureProvider<List<JournalEntry>> {
-  const LabJournalSearchProvider._({
+  LabJournalSearchProvider._({
     required LabJournalSearchFamily super.from,
     required ({String labId, String query}) super.argument,
   }) : super(
@@ -431,7 +431,7 @@ final class LabJournalSearchFamily extends $Family
           FutureOr<List<JournalEntry>>,
           ({String labId, String query})
         > {
-  const LabJournalSearchFamily._()
+  LabJournalSearchFamily._()
     : super(
         retry: null,
         name: r'labJournalSearchProvider',

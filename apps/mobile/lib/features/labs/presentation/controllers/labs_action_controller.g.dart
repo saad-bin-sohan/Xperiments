@@ -10,11 +10,11 @@ part of 'labs_action_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(LabsActionController)
-const labsActionControllerProvider = LabsActionControllerProvider._();
+final labsActionControllerProvider = LabsActionControllerProvider._();
 
 final class LabsActionControllerProvider
     extends $NotifierProvider<LabsActionController, AsyncValue<void>> {
-  const LabsActionControllerProvider._()
+  LabsActionControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -42,14 +42,13 @@ final class LabsActionControllerProvider
 }
 
 String _$labsActionControllerHash() =>
-    r'fb6cbd9b9d63fd06c7f110884ed6484882c8d8cf';
+    r'242bbee3a9328a75a350cd013804b66cfd23eaca';
 
 abstract class _$LabsActionController extends $Notifier<AsyncValue<void>> {
   AsyncValue<void> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AsyncValue<void>, AsyncValue<void>>;
     final element =
         ref.element
@@ -59,6 +58,6 @@ abstract class _$LabsActionController extends $Notifier<AsyncValue<void>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

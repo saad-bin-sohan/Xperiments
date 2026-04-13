@@ -1,0 +1,5 @@
+# This is a scratch template to help formulate the final guide.
+# Project: xperiments
+# Framework: Flutter
+# Flavor: dev
+# Command: flutter build apk --release --dart-define=FLAVOR=dev

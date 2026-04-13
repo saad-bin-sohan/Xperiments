@@ -10,7 +10,7 @@ part of 'labs_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(labsRemoteDataSource)
-const labsRemoteDataSourceProvider = LabsRemoteDataSourceProvider._();
+final labsRemoteDataSourceProvider = LabsRemoteDataSourceProvider._();
 
 final class LabsRemoteDataSourceProvider
     extends
@@ -20,7 +20,7 @@ final class LabsRemoteDataSourceProvider
           LabsRemoteDataSource
         >
     with $Provider<LabsRemoteDataSource> {
-  const LabsRemoteDataSourceProvider._()
+  LabsRemoteDataSourceProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,12 +58,12 @@ String _$labsRemoteDataSourceHash() =>
     r'b0cd736621e6a9ec7167aa159bb8fdc2851dcf2d';
 
 @ProviderFor(labsRepository)
-const labsRepositoryProvider = LabsRepositoryProvider._();
+final labsRepositoryProvider = LabsRepositoryProvider._();
 
 final class LabsRepositoryProvider
     extends $FunctionalProvider<LabsRepository, LabsRepository, LabsRepository>
     with $Provider<LabsRepository> {
-  const LabsRepositoryProvider._()
+  LabsRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -99,7 +99,7 @@ final class LabsRepositoryProvider
 String _$labsRepositoryHash() => r'1ff20a540cd530a028cc5b408ab1fab83e8bb32b';
 
 @ProviderFor(ensureDefaultLabExistsUseCase)
-const ensureDefaultLabExistsUseCaseProvider =
+final ensureDefaultLabExistsUseCaseProvider =
     EnsureDefaultLabExistsUseCaseProvider._();
 
 final class EnsureDefaultLabExistsUseCaseProvider
@@ -110,7 +110,7 @@ final class EnsureDefaultLabExistsUseCaseProvider
           EnsureDefaultLabExists
         >
     with $Provider<EnsureDefaultLabExists> {
-  const EnsureDefaultLabExistsUseCaseProvider._()
+  EnsureDefaultLabExistsUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -148,12 +148,12 @@ String _$ensureDefaultLabExistsUseCaseHash() =>
     r'e7d7ac62aca0940d5d1de1314b1b8520c6b9a6c5';
 
 @ProviderFor(watchUserLabsUseCase)
-const watchUserLabsUseCaseProvider = WatchUserLabsUseCaseProvider._();
+final watchUserLabsUseCaseProvider = WatchUserLabsUseCaseProvider._();
 
 final class WatchUserLabsUseCaseProvider
     extends $FunctionalProvider<WatchUserLabs, WatchUserLabs, WatchUserLabs>
     with $Provider<WatchUserLabs> {
-  const WatchUserLabsUseCaseProvider._()
+  WatchUserLabsUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -190,12 +190,12 @@ String _$watchUserLabsUseCaseHash() =>
     r'1394543a4d7d895c17005d6a5796f9df44ce3f96';
 
 @ProviderFor(createLabUseCase)
-const createLabUseCaseProvider = CreateLabUseCaseProvider._();
+final createLabUseCaseProvider = CreateLabUseCaseProvider._();
 
 final class CreateLabUseCaseProvider
     extends $FunctionalProvider<CreateLab, CreateLab, CreateLab>
     with $Provider<CreateLab> {
-  const CreateLabUseCaseProvider._()
+  CreateLabUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -231,12 +231,12 @@ final class CreateLabUseCaseProvider
 String _$createLabUseCaseHash() => r'16420d0e7707387b435a24c4a92052d276141120';
 
 @ProviderFor(updateLabUseCase)
-const updateLabUseCaseProvider = UpdateLabUseCaseProvider._();
+final updateLabUseCaseProvider = UpdateLabUseCaseProvider._();
 
 final class UpdateLabUseCaseProvider
     extends $FunctionalProvider<UpdateLab, UpdateLab, UpdateLab>
     with $Provider<UpdateLab> {
-  const UpdateLabUseCaseProvider._()
+  UpdateLabUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -272,12 +272,12 @@ final class UpdateLabUseCaseProvider
 String _$updateLabUseCaseHash() => r'9b10c22e9aebf8b94db48594ed44a8c2089cc99b';
 
 @ProviderFor(deleteLabUseCase)
-const deleteLabUseCaseProvider = DeleteLabUseCaseProvider._();
+final deleteLabUseCaseProvider = DeleteLabUseCaseProvider._();
 
 final class DeleteLabUseCaseProvider
     extends $FunctionalProvider<DeleteLab, DeleteLab, DeleteLab>
     with $Provider<DeleteLab> {
-  const DeleteLabUseCaseProvider._()
+  DeleteLabUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -313,12 +313,12 @@ final class DeleteLabUseCaseProvider
 String _$deleteLabUseCaseHash() => r'990cd87c8b7e521e74e0d2e5b5a0e4ae695ad2a0';
 
 @ProviderFor(watchLabByIdUseCase)
-const watchLabByIdUseCaseProvider = WatchLabByIdUseCaseProvider._();
+final watchLabByIdUseCaseProvider = WatchLabByIdUseCaseProvider._();
 
 final class WatchLabByIdUseCaseProvider
     extends $FunctionalProvider<WatchLabById, WatchLabById, WatchLabById>
     with $Provider<WatchLabById> {
-  const WatchLabByIdUseCaseProvider._()
+  WatchLabByIdUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -355,12 +355,12 @@ String _$watchLabByIdUseCaseHash() =>
     r'ba3778d618c4039ef7128945c29aba242d20ae1f';
 
 @ProviderFor(watchLabStatsUseCase)
-const watchLabStatsUseCaseProvider = WatchLabStatsUseCaseProvider._();
+final watchLabStatsUseCaseProvider = WatchLabStatsUseCaseProvider._();
 
 final class WatchLabStatsUseCaseProvider
     extends $FunctionalProvider<WatchLabStats, WatchLabStats, WatchLabStats>
     with $Provider<WatchLabStats> {
-  const WatchLabStatsUseCaseProvider._()
+  WatchLabStatsUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -397,12 +397,12 @@ String _$watchLabStatsUseCaseHash() =>
     r'86b046e135cccb7a8dbe1e92134c5c20860dd4b7';
 
 @ProviderFor(canDeleteLabUseCase)
-const canDeleteLabUseCaseProvider = CanDeleteLabUseCaseProvider._();
+final canDeleteLabUseCaseProvider = CanDeleteLabUseCaseProvider._();
 
 final class CanDeleteLabUseCaseProvider
     extends $FunctionalProvider<CanDeleteLab, CanDeleteLab, CanDeleteLab>
     with $Provider<CanDeleteLab> {
-  const CanDeleteLabUseCaseProvider._()
+  CanDeleteLabUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -439,13 +439,13 @@ String _$canDeleteLabUseCaseHash() =>
     r'3c0e6986a0057be219d4b49c30b2e23fd23d2e75';
 
 @ProviderFor(currentUserLabs)
-const currentUserLabsProvider = CurrentUserLabsProvider._();
+final currentUserLabsProvider = CurrentUserLabsProvider._();
 
 final class CurrentUserLabsProvider
     extends
         $FunctionalProvider<AsyncValue<List<Lab>>, List<Lab>, Stream<List<Lab>>>
     with $FutureModifier<List<Lab>>, $StreamProvider<List<Lab>> {
-  const CurrentUserLabsProvider._()
+  CurrentUserLabsProvider._()
     : super(
         from: null,
         argument: null,
@@ -473,12 +473,12 @@ final class CurrentUserLabsProvider
 String _$currentUserLabsHash() => r'5a64637a3d1335a7234f3bf69d7299cfc65f3bf0';
 
 @ProviderFor(labById)
-const labByIdProvider = LabByIdFamily._();
+final labByIdProvider = LabByIdFamily._();
 
 final class LabByIdProvider
     extends $FunctionalProvider<AsyncValue<Lab?>, Lab?, Stream<Lab?>>
     with $FutureModifier<Lab?>, $StreamProvider<Lab?> {
-  const LabByIdProvider._({
+  LabByIdProvider._({
     required LabByIdFamily super.from,
     required String super.argument,
   }) : super(
@@ -525,7 +525,7 @@ String _$labByIdHash() => r'eb7a025f8db866bfe11ec2de0815fd88d9514552';
 
 final class LabByIdFamily extends $Family
     with $FunctionalFamilyOverride<Stream<Lab?>, String> {
-  const LabByIdFamily._()
+  LabByIdFamily._()
     : super(
         retry: null,
         name: r'labByIdProvider',
@@ -542,13 +542,13 @@ final class LabByIdFamily extends $Family
 }
 
 @ProviderFor(labStats)
-const labStatsProvider = LabStatsFamily._();
+final labStatsProvider = LabStatsFamily._();
 
 final class LabStatsProvider
     extends
         $FunctionalProvider<AsyncValue<LabStats>, LabStats, Stream<LabStats>>
     with $FutureModifier<LabStats>, $StreamProvider<LabStats> {
-  const LabStatsProvider._({
+  LabStatsProvider._({
     required LabStatsFamily super.from,
     required String super.argument,
   }) : super(
@@ -591,11 +591,11 @@ final class LabStatsProvider
   }
 }
 
-String _$labStatsHash() => r'a7641bc95072a17222753903b16e668cd28188d7';
+String _$labStatsHash() => r'9e5ed2b30dbd26dd3c1dbfba97e55776cb981cd8';
 
 final class LabStatsFamily extends $Family
     with $FunctionalFamilyOverride<Stream<LabStats>, String> {
-  const LabStatsFamily._()
+  LabStatsFamily._()
     : super(
         retry: null,
         name: r'labStatsProvider',
@@ -612,7 +612,7 @@ final class LabStatsFamily extends $Family
 }
 
 @ProviderFor(labDeletionCheck)
-const labDeletionCheckProvider = LabDeletionCheckFamily._();
+final labDeletionCheckProvider = LabDeletionCheckFamily._();
 
 final class LabDeletionCheckProvider
     extends
@@ -622,7 +622,7 @@ final class LabDeletionCheckProvider
           FutureOr<LabDeletionCheck>
         >
     with $FutureModifier<LabDeletionCheck>, $FutureProvider<LabDeletionCheck> {
-  const LabDeletionCheckProvider._({
+  LabDeletionCheckProvider._({
     required LabDeletionCheckFamily super.from,
     required String super.argument,
   }) : super(
@@ -666,11 +666,11 @@ final class LabDeletionCheckProvider
   }
 }
 
-String _$labDeletionCheckHash() => r'023a59b00828dcacba3196e07291d384e1f5d6e8';
+String _$labDeletionCheckHash() => r'c88e928ab07f8c0cfcf086893f1503aad5248065';
 
 final class LabDeletionCheckFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<LabDeletionCheck>, String> {
-  const LabDeletionCheckFamily._()
+  LabDeletionCheckFamily._()
     : super(
         retry: null,
         name: r'labDeletionCheckProvider',

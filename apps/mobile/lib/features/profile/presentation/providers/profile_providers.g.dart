@@ -10,7 +10,7 @@ part of 'profile_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(preferencesRemoteDataSource)
-const preferencesRemoteDataSourceProvider =
+final preferencesRemoteDataSourceProvider =
     PreferencesRemoteDataSourceProvider._();
 
 final class PreferencesRemoteDataSourceProvider
@@ -21,7 +21,7 @@ final class PreferencesRemoteDataSourceProvider
           PreferencesRemoteDataSource
         >
     with $Provider<PreferencesRemoteDataSource> {
-  const PreferencesRemoteDataSourceProvider._()
+  PreferencesRemoteDataSourceProvider._()
     : super(
         from: null,
         argument: null,
@@ -59,7 +59,7 @@ String _$preferencesRemoteDataSourceHash() =>
     r'e562cf205f863e1684112df6d38f5f544ba120eb';
 
 @ProviderFor(preferencesRepository)
-const preferencesRepositoryProvider = PreferencesRepositoryProvider._();
+final preferencesRepositoryProvider = PreferencesRepositoryProvider._();
 
 final class PreferencesRepositoryProvider
     extends
@@ -69,7 +69,7 @@ final class PreferencesRepositoryProvider
           PreferencesRepository
         >
     with $Provider<PreferencesRepository> {
-  const PreferencesRepositoryProvider._()
+  PreferencesRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -107,7 +107,7 @@ String _$preferencesRepositoryHash() =>
     r'8cf41e0ded8bc58b39ca2e7f9325457b84dfec22';
 
 @ProviderFor(watchPreferencesUseCase)
-const watchPreferencesUseCaseProvider = WatchPreferencesUseCaseProvider._();
+final watchPreferencesUseCaseProvider = WatchPreferencesUseCaseProvider._();
 
 final class WatchPreferencesUseCaseProvider
     extends
@@ -117,7 +117,7 @@ final class WatchPreferencesUseCaseProvider
           WatchPreferences
         >
     with $Provider<WatchPreferences> {
-  const WatchPreferencesUseCaseProvider._()
+  WatchPreferencesUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -154,7 +154,7 @@ String _$watchPreferencesUseCaseHash() =>
     r'18a76395d966917303b323c93b817bdc29109a75';
 
 @ProviderFor(updatePreferencesUseCase)
-const updatePreferencesUseCaseProvider = UpdatePreferencesUseCaseProvider._();
+final updatePreferencesUseCaseProvider = UpdatePreferencesUseCaseProvider._();
 
 final class UpdatePreferencesUseCaseProvider
     extends
@@ -164,7 +164,7 @@ final class UpdatePreferencesUseCaseProvider
           UpdatePreferences
         >
     with $Provider<UpdatePreferences> {
-  const UpdatePreferencesUseCaseProvider._()
+  UpdatePreferencesUseCaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -202,7 +202,7 @@ String _$updatePreferencesUseCaseHash() =>
     r'e89bde2a960b0ebe3eab74b9447c85e7d497cbba';
 
 @ProviderFor(currentUserPreferences)
-const currentUserPreferencesProvider = CurrentUserPreferencesProvider._();
+final currentUserPreferencesProvider = CurrentUserPreferencesProvider._();
 
 final class CurrentUserPreferencesProvider
     extends
@@ -212,7 +212,7 @@ final class CurrentUserPreferencesProvider
           Stream<UserPreferences>
         >
     with $FutureModifier<UserPreferences>, $StreamProvider<UserPreferences> {
-  const CurrentUserPreferencesProvider._()
+  CurrentUserPreferencesProvider._()
     : super(
         from: null,
         argument: null,
@@ -242,12 +242,12 @@ String _$currentUserPreferencesHash() =>
     r'4381197a61f7c26cd08feb2ddf2b39b2531646e6';
 
 @ProviderFor(passFailEnabled)
-const passFailEnabledProvider = PassFailEnabledProvider._();
+final passFailEnabledProvider = PassFailEnabledProvider._();
 
 final class PassFailEnabledProvider
     extends $FunctionalProvider<bool, bool, bool>
     with $Provider<bool> {
-  const PassFailEnabledProvider._()
+  PassFailEnabledProvider._()
     : super(
         from: null,
         argument: null,
@@ -283,12 +283,12 @@ final class PassFailEnabledProvider
 String _$passFailEnabledHash() => r'310c35aa411e6fdd3f4acfac879a3655ffbe5bad';
 
 @ProviderFor(currentThemeMode)
-const currentThemeModeProvider = CurrentThemeModeProvider._();
+final currentThemeModeProvider = CurrentThemeModeProvider._();
 
 final class CurrentThemeModeProvider
     extends $FunctionalProvider<ThemeMode, ThemeMode, ThemeMode>
     with $Provider<ThemeMode> {
-  const CurrentThemeModeProvider._()
+  CurrentThemeModeProvider._()
     : super(
         from: null,
         argument: null,

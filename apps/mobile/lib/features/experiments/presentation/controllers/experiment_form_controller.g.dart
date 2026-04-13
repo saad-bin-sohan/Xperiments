@@ -10,11 +10,11 @@ part of 'experiment_form_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(ExperimentFormController)
-const experimentFormControllerProvider = ExperimentFormControllerProvider._();
+final experimentFormControllerProvider = ExperimentFormControllerProvider._();
 
 final class ExperimentFormControllerProvider
     extends $NotifierProvider<ExperimentFormController, AsyncValue<void>> {
-  const ExperimentFormControllerProvider._()
+  ExperimentFormControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -49,7 +49,6 @@ abstract class _$ExperimentFormController extends $Notifier<AsyncValue<void>> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AsyncValue<void>, AsyncValue<void>>;
     final element =
         ref.element
@@ -59,6 +58,6 @@ abstract class _$ExperimentFormController extends $Notifier<AsyncValue<void>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
