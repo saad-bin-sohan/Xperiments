@@ -2,6 +2,14 @@
 
 Xperiments is a private, minimal self-improvement experiment tracker built with Flutter + Firebase.
 
+## Try the app (instant preview)
+
+You can test the Android app instantly in your browser (no install required):
+
+👉 https://appetize.io/app/b_3q5obu3u4olpvt7dljnh4zovri
+
+> Note: This is a live emulator preview and may take a few seconds to load.
+
 ## Monorepo layout
 
 - `apps/mobile` Flutter mobile app (Android active, iOS-ready architecture)
